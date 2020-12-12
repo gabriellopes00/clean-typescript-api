@@ -1,6 +1,6 @@
 export class MissingParamError extends Error {
   constructor(paramName: string) {
-    super(`MissingParamError: ${paramName}`)
+    super(`Missing param: ${paramName}`)
     this.name = paramName
   }
 }
