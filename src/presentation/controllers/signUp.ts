@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from '../interfaces/http'
+import { badRequest } from '../helpers/http'
 import { MissingParamError } from '../errors/missing-param'
 import { InvalidParamError } from '../errors/invalid-param'
-import { badRequest } from '../helpers/http'
 import { Controller } from '@interfaces/controller'
 import { EmailValidator } from '@interfaces/email-validator'
 
