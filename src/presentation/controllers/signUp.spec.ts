@@ -1,23 +1,36 @@
 import { SignUpController } from './SignUp'
-
-import { MissingParamError } from '../errors/missing-param'
-import { InvalidParamError } from '../errors/invalid-param'
-import { ServerError } from '../errors/server'
-
 import { EmailValidator } from '@interfaces/email-validator'
+import {
+  MissingParamError,
+  InvalidParamError,
+  ServerError
+} from '../errors/index'
 
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
 }
 
-const makeSut = (): SutTypes => {
+const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid(email: string): boolean {
       return true
     }
   }
-  const emailValidatorStub = new EmailValidatorStub()
+  return new EmailValidatorStub()
+}
+
+const makeEmailValidatorWithError = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid(email: string): boolean {
+      throw new Error()
+    }
+  }
+  return new EmailValidatorStub()
+}
+
+const makeSut = (): SutTypes => {
+  const emailValidatorStub = makeEmailValidator()
   const sut = new SignUpController(emailValidatorStub)
 
   return {
@@ -100,14 +113,8 @@ describe('SingUp Controller', () => {
   })
 
   test('Should return 500 if EmailValidator throws', () => {
-    class EmailValidatorStub implements EmailValidator {
-      isValid(email: string): boolean {
-        throw new Error()
-      }
-    }
-    const emailValidatorStub = new EmailValidatorStub()
+    const emailValidatorStub = makeEmailValidatorWithError()
     const sut = new SignUpController(emailValidatorStub)
-
     const httpRequest = {
       body: {
         name: 'gabriel',
@@ -116,7 +123,6 @@ describe('SingUp Controller', () => {
       }
     }
     const httpResponse = sut.handle(httpRequest)
-
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
   })
