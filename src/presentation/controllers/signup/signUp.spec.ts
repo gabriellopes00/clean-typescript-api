@@ -54,6 +54,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('SingUp Controller', () => {
+  // Data validation tests
   test('Should return 400 if no name is provided', () => {
     const { sut } = makeSut()
     const httpRequest = {
@@ -143,6 +144,7 @@ describe('SingUp Controller', () => {
     expect(httpResponse.body).toEqual(new ServerError())
   })
 
+  // AddAccount integration tests
   test('Should call AddAccount with correct values', () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = jest.spyOn(addAccountStub, 'add')
@@ -158,6 +160,43 @@ describe('SingUp Controller', () => {
       name: 'gabriel',
       email: 'gabriellopes00@gmail.com',
       password: 'gabriel123'
+    })
+  })
+
+  test('Should return 500 if AddAccount throws', () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        name: 'gabriel',
+        email: 'gabriel@example.com',
+        password: 'gabriel123'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('Should return 200 if valid data is provided', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'gabriel',
+        email: 'gabriel@example.com',
+        password: 'gabriel123'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      id: 'valid-id',
+      name: 'valid-name',
+      email: 'valid-email',
+      password: 'valid-password'
     })
   })
 })
