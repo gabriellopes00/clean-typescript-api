@@ -4,7 +4,7 @@ import {
   AddAccount,
   AddAccountModel,
   AccountModel
-} from './signup-interfaces'
+} from './signupInterfaces'
 import {
   MissingParamError,
   InvalidParamError,

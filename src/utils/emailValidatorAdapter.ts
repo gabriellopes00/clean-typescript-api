@@ -1,4 +1,4 @@
-import { EmailValidator } from '@pres-interfaces/email-validator'
+import { EmailValidator } from '@pres-interfaces/emailValidator'
 import validator from 'validator'
 
 export class EmailValidatorAdapter implements EmailValidator {
