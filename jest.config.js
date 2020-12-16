@@ -3,7 +3,10 @@ const { pathsToModuleNameMapper } = require('ts-jest/utils')
 
 module.exports = {
   roots: ['<rootDir>/src'],
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  collectCoverageFrom: [
+    '!<rootDir>/src/**/*-interfaces.ts',
+    '!**/interfaces/**'
+  ],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   testEnvironment: 'node',

@@ -6,9 +6,14 @@
   "author": "Gabriel Lopes <gabrielluislopes00@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:watch": "yarn test --watch",
+    "test:unit": "yarn test -c jest-unit-config.js",
+    "test:integration": "yarn test -c jest-integration-config.js",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage",
     "lint": "eslint src/** --fix",
-    "test": "jest --passWithNoTests",
-    "test-watch": "jest --passWithNoTests --watch",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/app.ts",
     "build": "yarn lint && yarn test && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/index.js"
