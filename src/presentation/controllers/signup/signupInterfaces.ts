@@ -1,4 +1,4 @@
 export * from '../../interfaces'
-export * from '@pres-interfaces/emailValidator'
-export * from '@usecases/addAccount'
-export * from '@models/account'
+export * from '@presInterfaces/emailValidator'
+export * from '@domUsecases/addAccount'
+export * from '@domModels/account'

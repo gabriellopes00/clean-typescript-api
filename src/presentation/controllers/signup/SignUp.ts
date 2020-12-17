@@ -1,6 +1,6 @@
-import { badRequest, serverError, ok } from '../../helpers/http'
-import { MissingParamError, InvalidParamError } from '../../errors/index'
-import { AddAccount } from '@usecases/addAccount'
+import { badRequest, serverError, ok } from '@presHelpers/http'
+import { MissingParamError, InvalidParamError } from '@presErrors/index'
+import { AddAccount } from '@domUsecases/addAccount'
 import {
   Controller,
   EmailValidator,

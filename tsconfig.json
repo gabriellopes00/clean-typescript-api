@@ -16,12 +16,15 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@pres-controllers/*": ["./src/presentation/controllers/*"],
-      "@pres-interfaces/*": ["./src/presentation/interfaces/*"],
-      "@models/*": ["./src/domain/models/*"],
-      "@usecases/*": ["./src/domain/usecases/*"],
-      "@repositories/*": ["./src/repositories/*"],
-      "@config/*": ["./src/config/*"]
+      "@presControllers/*": ["./src/presentation/controllers/*"],
+      "@presInterfaces/*": ["./src/presentation/interfaces/*"],
+      "@presHelpers/*": ["./src/presentation/helpers/*"],
+      "@presErrors/*": ["./src/presentation/errors/*"],
+
+      "@domModels/*": ["./src/domain/models/*"],
+      "@domUsecases/*": ["./src/domain/usecases/*"],
+
+      "@dataUsecases/*": ["./src/data/usecases/*"]
     }
   },
   "include": ["src/**/*"]

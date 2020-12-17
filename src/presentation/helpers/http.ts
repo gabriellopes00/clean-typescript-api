@@ -1,5 +1,5 @@
-import { MissingParamError, ServerError } from '../errors/index'
-import { HttpResponse } from '../interfaces/http'
+import { MissingParamError, ServerError } from '@presErrors/index'
+import { HttpResponse } from '@presInterfaces/http'
 
 export const badRequest = (error: MissingParamError): HttpResponse => ({
   statusCode: 400,

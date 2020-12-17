@@ -9,7 +9,7 @@ import {
   MissingParamError,
   InvalidParamError,
   ServerError
-} from '../../errors/index'
+} from '@presErrors/index'
 
 interface SutTypes {
   sut: SignUpController
