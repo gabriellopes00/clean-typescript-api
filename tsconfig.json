@@ -24,7 +24,8 @@
       "@domModels/*": ["./src/domain/models/*"],
       "@domUsecases/*": ["./src/domain/usecases/*"],
 
-      "@dataUsecases/*": ["./src/data/usecases/*"]
+      "@dataUsecases/*": ["./src/data/usecases/*"],
+      "@dataInterfaces/*": ["./src/data/interfaces/*"]
     }
   },
   "include": ["src/**/*"]
