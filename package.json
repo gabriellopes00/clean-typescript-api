@@ -10,7 +10,7 @@
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:watch": "yarn test --watch",
     "test:unit": "yarn test:watch -c jest-unit-config.js",
-    "test:integration": "yarn test -c jest-integration-config.js",
+    "test:integration": "yarn test:watch -c jest-integration-config.js",
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage",
     "lint": "eslint src/** --fix",
