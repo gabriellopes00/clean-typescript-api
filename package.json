@@ -55,6 +55,7 @@
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "fast-glob": "^3.2.4",
     "mongodb": "^3.6.3",
     "validator": "^13.5.2"
   }
