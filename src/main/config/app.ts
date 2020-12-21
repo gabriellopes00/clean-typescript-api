@@ -6,4 +6,4 @@ const app = express()
 Middlewares(app)
 Routes(app)
 
-export { app }
+export default app
