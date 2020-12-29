@@ -1,7 +1,7 @@
 {
-  "name": "node-project-setup",
+  "name": "clean-typescript-api",
   "version": "1.0.0",
-  "description": "My Node projects setup",
+  "description": "A typescript api made with clean architecture and TDD",
   "main": "src/index.tss",
   "author": "Gabriel Lopes <gabrielluislopes00@gmail.com>",
   "license": "MIT",
