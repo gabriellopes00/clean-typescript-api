@@ -4,6 +4,7 @@ import { EmailValidatorAdapter } from '@utils/emailValidatorAdapter'
 import { DbAddAccount } from '@data/usecases/addAccount/DbAddAccount'
 import { BcryptAdapter } from '@infra/cryptography/BcryptAdapter'
 import { MongoAccountRepository } from '@infra/db/mongodb/accountRepository/Account'
+import { LogMongoRepository } from '@infra/db/mongodb/logRepository/log'
 import { LogControllerDecorator } from '../decorators/log'
 
 export const makeSignUpController = (): Controller => {
@@ -19,5 +20,6 @@ export const makeSignUpController = (): Controller => {
     emailValidatorAdapter,
     dbAddAccount
   )
-  return new LogControllerDecorator(signUpController)
+  const logMongoRepository = new LogMongoRepository()
+  return new LogControllerDecorator(signUpController, logMongoRepository)
 }
