@@ -1,9 +1,14 @@
-import { MissingParamError, ServerError } from '@presErrors/index'
+import { ServerError, UnauthorizedError } from '@presErrors/index'
 import { HttpResponse } from '@presInterfaces/http'
 
-export const badRequest = (error: MissingParamError): HttpResponse => ({
+export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
   body: error
+})
+
+export const unauthorized = (): HttpResponse => ({
+  statusCode: 401,
+  body: new UnauthorizedError()
 })
 
 export const serverError = (error: Error): HttpResponse => ({
