@@ -1,5 +1,5 @@
 import { badRequest, serverError, ok } from '@presHelpers/http'
-import { MissingParamError, InvalidParamError } from '@presErrors/index'
+import { InvalidParamError } from '@presErrors/index'
 import { AddAccount } from '@domUsecases/addAccount'
 import {
   Controller,
@@ -20,12 +20,6 @@ export class SignUpController implements Controller {
     try {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
-      const requiredFields = ['name', 'email', 'password']
-      for (const requiredField of requiredFields) {
-        if (!httpRequest.body[requiredField]) {
-          return badRequest(new MissingParamError(requiredField))
-        }
-      }
 
       const { email, name, password } = httpRequest.body
       const isValidEmail = this.emailValidator.isValid(email)
