@@ -23,7 +23,8 @@ describe('SigUp Routes', () => {
       .send({
         name: 'gabriel',
         email: 'gabriel@example.com',
-        password: 'gabriel123'
+        password: 'gabriel123',
+        passwordConfirmation: 'gabriel123'
       })
       .expect(200)
   })
