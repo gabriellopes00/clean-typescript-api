@@ -1,11 +1,11 @@
 import { badRequest, serverError, ok } from '@presentation/helpers/http'
-import { AddAccount } from '@domain/usecases/addAccount'
+import { AddAccount } from '@domain/usecases/add-account'
 import {
   Controller,
   HttpRequest,
   HttpResponse,
   Validation
-} from './signupInterfaces'
+} from './signup-interfaces'
 
 export class SignUpController implements Controller {
   constructor(

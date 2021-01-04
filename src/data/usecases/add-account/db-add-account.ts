@@ -4,7 +4,7 @@ import {
   AccountModel,
   AddAccountRepository,
   Encrypter
-} from './DbAddAccountInterfaces'
+} from './db-add-account-interfaces'
 
 export class DbAddAccount implements AddAccount {
   constructor(

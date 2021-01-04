@@ -3,7 +3,7 @@ import { RequiredFieldValidation } from '@presentation/helpers/validator/require
 import { Validation } from '@presentation/interfaces/validator/validation'
 import { CompareFieldsValidation } from '@presentation/helpers/validator/compare-fields-validation'
 import { EmailValidation } from '@presentation/helpers/validator/email-validation'
-import { EmailValidatorAdapter } from '@utils/emailValidatorAdapter'
+import { EmailValidatorAdapter } from '@utils/email-validator-adapter'
 
 export const makeSignUpValidation = (): ValidationComposite => {
   const validations: Validation[] = []

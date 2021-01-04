@@ -1,5 +1,5 @@
-import { AddAccountRepository } from '@data/interfaces/addAccountRepository'
-import { AddAccountModel } from '@domain/usecases/addAccount'
+import { AddAccountRepository } from '@data/interfaces/add-account-repository'
+import { AddAccountModel } from '@domain/usecases/add-account'
 import { AccountModel } from '@domain/models/account'
 import { MongoHelper } from '../helpers/index'
 

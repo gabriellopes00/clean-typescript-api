@@ -1,4 +1,4 @@
 export * from './server'
 export * from './unauthorized'
-export * from './missingParam'
-export * from './invalidParam'
+export * from './missing-param'
+export * from './invalid-param'

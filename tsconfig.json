@@ -16,10 +16,6 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@root/*": ["./*"],
-
-      "@src/*": ["./src/*"],
-
       "@data/*": ["./src/data/*"],
       "@main/*": ["./src/main/*"],
       "@presentation/*": ["./src/presentation/*"],

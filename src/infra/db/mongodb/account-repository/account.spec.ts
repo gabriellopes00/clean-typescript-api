@@ -1,5 +1,5 @@
 import { MongoHelper } from '../helpers/mongo'
-import { MongoAccountRepository } from './Account'
+import { MongoAccountRepository } from './account'
 
 const makeSut = () => {
   const sut = new MongoAccountRepository()

@@ -1,3 +1,3 @@
 export * from './cors'
-export * from './contentType'
-export * from './bodyParser'
+export * from './content-type'
+export * from './body-parser'
