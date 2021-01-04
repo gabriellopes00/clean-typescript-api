@@ -1,5 +1,5 @@
 import { badRequest, serverError, ok } from '@presentation/helpers/http'
-import { AddAccount } from '@domain/usecases/add-account'
+import { AddAccount, AddAccountModel } from '@domain/usecases/add-account'
 import {
   Controller,
   HttpRequest,
@@ -13,7 +13,9 @@ export class SignUpController implements Controller {
     private readonly addAccount: AddAccount
   ) {}
 
-  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle(
+    httpRequest: HttpRequest<AddAccountModel>
+  ): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)

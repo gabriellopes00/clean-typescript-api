@@ -15,7 +15,7 @@ interface SutTypes {
   validationStub: Validation
 }
 
-const makeFakeRequest = (): HttpRequest => ({
+const makeFakeRequest = (): HttpRequest<AddAccountModel> => ({
   body: {
     name: 'gabriel',
     email: 'gabriel@example.com',
