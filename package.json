@@ -16,7 +16,7 @@
     "lint": "eslint src/** --fix",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/main/server.ts",
     "build": "yarn lint && yarn test && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "node dist/index.js"
+    "start": "node dist/main/server.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

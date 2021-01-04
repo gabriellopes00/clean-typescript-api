@@ -1,5 +1,5 @@
-import { ServerError, UnauthorizedError } from '@presErrors/index'
-import { HttpResponse } from '@presInterfaces/http'
+import { ServerError, UnauthorizedError } from '@presentation/errors/index'
+import { HttpResponse } from '@presentation/interfaces/http'
 
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,

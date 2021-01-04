@@ -25,18 +25,7 @@
       "@presentation/*": ["./src/presentation/*"],
       "@domain/*": ["./src/domain/*"],
       "@infra/*": ["./src/infra/*"],
-      "@utils/*": ["./src/utils/*"],
-
-      "@presControllers/*": ["./src/presentation/controllers/*"],
-      "@presInterfaces/*": ["./src/presentation/interfaces/*"],
-      "@presHelpers/*": ["./src/presentation/helpers/*"],
-      "@presErrors/*": ["./src/presentation/errors/*"],
-
-      "@domModels/*": ["./src/domain/models/*"],
-      "@domUsecases/*": ["./src/domain/usecases/*"],
-
-      "@dataUsecases/*": ["./src/data/usecases/*"],
-      "@dataInterfaces/*": ["./src/data/interfaces/*"]
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src/**/*"]

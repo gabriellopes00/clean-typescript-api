@@ -1,6 +1,6 @@
-import { AddAccountRepository } from '@dataInterfaces/addAccountRepository'
-import { AddAccountModel } from '@domUsecases/addAccount'
-import { AccountModel } from '@domModels/account'
+import { AddAccountRepository } from '@data/interfaces/addAccountRepository'
+import { AddAccountModel } from '@domain/usecases/addAccount'
+import { AccountModel } from '@domain/models/account'
 import { MongoHelper } from '../helpers/index'
 
 export class MongoAccountRepository implements AddAccountRepository {

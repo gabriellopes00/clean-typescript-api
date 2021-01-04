@@ -15,13 +15,14 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '@repositories': './src/repositories',
-          '@models': './src/models',
-          '@controllers': './src/controllers',
-          '@config': './src/config'
+          '@presentation': './presentation',
+          '@main': './main',
+          '@domain': './domain',
+          '@data': './data',
+          '@infra': './infra'
         }
       }
     ]
   ],
-  ignore: ['**/*.spec.ts']
+  ignore: ['**/*.spec.ts', '**/*.test.ts', '**/*.spec.js', '**/*.test.js']
 }
