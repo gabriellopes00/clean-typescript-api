@@ -1,5 +1,13 @@
-import { badRequest, serverError, unauthorized, ok } from '../../helpers/http'
-import { Authenticator } from '@domain/usecases/authentication'
+import {
+  badRequest,
+  serverError,
+  unauthorized,
+  ok
+} from '../../helpers/http/http'
+import {
+  AuthenticationModel,
+  Authenticator
+} from '@domain/usecases/authentication'
 import {
   Controller,
   HttpRequest,
@@ -13,14 +21,16 @@ export class LoginController implements Controller {
     private readonly authenticator: Authenticator
   ) {}
 
-  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle(
+    httpRequest: HttpRequest<AuthenticationModel>
+  ): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
 
-      const { email, password } = httpRequest.body
-
-      const accessToken = await this.authenticator.authenticate(email, password)
+      const accessToken = await this.authenticator.authenticate(
+        httpRequest.body
+      )
       if (!accessToken) return unauthorized()
 
       return ok({ accessToken })

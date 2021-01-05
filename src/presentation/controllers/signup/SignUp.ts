@@ -1,4 +1,4 @@
-import { badRequest, serverError, ok } from '@presentation/helpers/http'
+import { badRequest, serverError, ok } from '@presentation/helpers/http/http'
 import { AddAccount, AddAccountModel } from '@domain/usecases/add-account'
 import {
   Controller,
