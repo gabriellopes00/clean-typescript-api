@@ -100,4 +100,14 @@ describe('DbAuthentication Usecase', () => {
     const promiseError = sut.authenticate(makeFakeAuthentication())
     await expect(promiseError).rejects.toThrow()
   })
+
+  test('Should return null if HashComparer returns false', async () => {
+    const { sut, hashComparerStub } = makeSut()
+    jest
+      .spyOn(hashComparerStub, 'compare')
+      .mockReturnValueOnce(new Promise((resolve, reject) => resolve(false)))
+
+    const accessToken = await sut.authenticate(makeFakeAuthentication())
+    expect(accessToken).toBeNull()
+  })
 })
