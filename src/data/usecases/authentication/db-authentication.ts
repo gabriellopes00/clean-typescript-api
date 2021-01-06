@@ -5,12 +5,14 @@ import {
   Authenticator
 } from '@domain/usecases/authentication'
 import { TokenGenerator } from '@data/interfaces/cryptography/token-generator'
+import { AccessTokenRepository } from '@data/interfaces/db/access-token-repository'
 
 export class DbAuthentication implements Authenticator {
   constructor(
     private readonly loadAccountRepository: LoadAccountRepository,
     private readonly hashComparer: HashComparer,
-    private readonly tokenGenerator: TokenGenerator
+    private readonly tokenGenerator: TokenGenerator,
+    private readonly accessTokenRepository: AccessTokenRepository
   ) {}
 
   async authenticate(data: AuthenticationModel): Promise<string> {
@@ -22,6 +24,7 @@ export class DbAuthentication implements Authenticator {
       )
       if (isValid) {
         const accessToken = await this.tokenGenerator.generate(account.id)
+        await this.accessTokenRepository.store(account.id, accessToken)
         return accessToken
       }
     }
