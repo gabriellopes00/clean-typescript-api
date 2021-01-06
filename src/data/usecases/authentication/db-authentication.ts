@@ -1,4 +1,4 @@
-import { LoadAccountRepository } from '../../interfaces/load-account-repository'
+import { LoadAccountRepository } from '../../interfaces/db/load-account-repository'
 import {
   AuthenticationModel,
   Authenticator

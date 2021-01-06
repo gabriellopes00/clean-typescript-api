@@ -1,5 +1,5 @@
 import { AccountModel } from '../add-account/db-add-account-interfaces'
-import { LoadAccountRepository } from '../../interfaces/load-account-repository'
+import { LoadAccountRepository } from '../../interfaces/db/load-account-repository'
 import { DbAuthentication } from './db-authentication'
 import { AuthenticationModel } from '@domain/usecases/authentication'
 
