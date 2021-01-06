@@ -1,18 +1,19 @@
 <h1>
   Clean Typescript API
-  <img src="https://devicons.github.io/devicon/devicon.git/icons/typescript/typescript-original.svg" alt="typescript" width="30" height="30"/>
+  <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
 </h1>
 
 ###### An API mande with
 
 <p>
-  <img src="https://devicons.github.io/devicon/devicon.git/icons/typescript/typescript-original.svg" alt="typescript" width="30" height="30"/>
-  <img src="https://devicons.github.io/devicon/devicon.git/icons/mongodb/mongodb-original.svg" alt="mongodb" width="30" height="30"/>
-  <img src="https://devicons.github.io/devicon/devicon.git/icons/nodejs/nodejs-original.svg" alt="nodejs" width="30" height="30"/>
+  <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
+  <img src="https://img.icons8.com/color/452/mongodb.png" alt="mongodb" width="35" height="35"/>
+  <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" alt="nodejs" width="30" height="30"/>
+  <img src="https://cdn.svgporn.com/logos/eslint.svg" alt="eslint" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/jest.svg" height="30" alt="jest">
 </p>
 
-## About this project 🛠
+## About this project ⚙
 
 This is an API made in [NodeJs, Typescript, TDD, Clean Architecture e SOLID Course](https://www.udemy.com/course/tdd-com-mango/), course led by [Rodrigo Mango](https://github.com/rmanguinho). In this course we develop an API using Node.JS, Typescript, Mongodb and all good programming practices, such as Clean Architecture, SOLID principles, TDD and Design Patterns. 🖋
 
@@ -22,7 +23,7 @@ You'll need [Node.js](https://nodejs.org), [Mongodb](https://www.mongodb.com/) a
 
 ###### Cloning Repository
 
-```
+```cloning
 git clone https://github.com/gabriellopes00/clean-typescript-api.git &&
 cd clean-typescript-api &&
 yarn install || npm install
@@ -30,23 +31,29 @@ yarn install || npm install
 
 ###### Running API (development environment)
 
-```
+```development
 yarn dev || npm run dev
 ```
 
 ###### Generating Build and running build
 
-```
-yarn build && yarn start
+```build
+yarn build && yarn start || npm run build && npm run start
 ```
 
 ###### Tests 🧪
 
+- _All_ ❯ `yarn test`
 - _Coverage_ ❯ `yarn test:ci`
 - _Watch_ ❯ `yarn test:watch`
 - _Unit(.spec)_ ❯ `yarn test:unit`
 - _Integration(.test)_ ❯ `yarn test:integration`
-- _All_ ❯ `yarn test`
+- _Staged_ ❯ `yarn test:staged`
+- _Verbose(view logs)_ ❯ `yarn test:verbose`
+
+###### Lint (eslint) 🎭
+
+- _Lint(fix)_ ❯ `yarn lint`
 
 ## Contact 📱
 
