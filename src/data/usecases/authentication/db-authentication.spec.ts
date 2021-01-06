@@ -1,5 +1,5 @@
-import { AccountModel } from '../add-account/db-add-account-interfaces'
 import { DbAuthentication } from './db-authentication'
+import { AccountModel } from '../add-account/db-add-account-interfaces'
 import { AuthenticationModel } from '@domain/usecases/authentication'
 import { LoadAccountRepository } from '../../interfaces/db/load-account-repository'
 import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
@@ -184,5 +184,28 @@ describe('DbAuthentication Usecase', () => {
 
     await sut.authenticate(makeFakeAuthentication())
     expect(storeSpy).toHaveBeenCalledWith(makeFakeAccount().id, 'any_token')
+  })
+
+  test('Should throw if AccessTokenGenerator throws', async () => {
+    const { sut, accessTokenRepositoryStub } = makeSut()
+    jest
+      .spyOn(accessTokenRepositoryStub, 'store')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+
+    const promiseError = sut.authenticate(makeFakeAuthentication())
+    await expect(promiseError).rejects.toThrow()
+  })
+  test('Should throw if TokenGenerator throws', async () => {
+    const { sut, tokenGeneratorStub } = makeSut()
+    jest
+      .spyOn(tokenGeneratorStub, 'generate')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+
+    const promiseError = sut.authenticate(makeFakeAuthentication())
+    await expect(promiseError).rejects.toThrow()
   })
 })

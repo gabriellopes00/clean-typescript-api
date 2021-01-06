@@ -1,11 +1,11 @@
 import { LoadAccountRepository } from '../../interfaces/db/load-account-repository'
 import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
+import { TokenGenerator } from '../../interfaces/cryptography/token-generator'
+import { AccessTokenRepository } from '../../interfaces/db/access-token-repository'
 import {
   AuthenticationModel,
   Authenticator
 } from '@domain/usecases/authentication'
-import { TokenGenerator } from '@data/interfaces/cryptography/token-generator'
-import { AccessTokenRepository } from '@data/interfaces/db/access-token-repository'
 
 export class DbAuthentication implements Authenticator {
   constructor(
