@@ -143,4 +143,22 @@ describe('DbAuthentication Usecase', () => {
     await sut.authenticate(makeFakeAuthentication())
     expect(generateSpy).toHaveBeenCalledWith(makeFakeAccount().id)
   })
+
+  test('Should throw if TokenGenerator throws', async () => {
+    const { sut, tokenGeneratorStub } = makeSut()
+    jest
+      .spyOn(tokenGeneratorStub, 'generate')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+
+    const promiseError = sut.authenticate(makeFakeAuthentication())
+    await expect(promiseError).rejects.toThrow()
+  })
+
+  test('Should call TokenGenerator with correct id', async () => {
+    const { sut } = makeSut()
+    const accessToken = await sut.authenticate(makeFakeAuthentication())
+    expect(accessToken).toBe('any_token')
+  })
 })
