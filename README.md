@@ -15,7 +15,7 @@
 
 ## About this project ⚙
 
-This is an API made in [NodeJs, Typescript, TDD, Clean Architecture e SOLID Course](https://www.udemy.com/course/tdd-com-mango/), course led by [Rodrigo Mango](https://github.com/rmanguinho). In this course we develop an API using Node.JS, Typescript, Mongodb and all good programming practices, such as Clean Architecture, SOLID principles, TDD and Design Patterns. 🖋
+This is an API made in [NodeJs, Typescript, TDD, Clean Architecture e SOLID Course](https://www.udemy.com/course/tdd-com-mango/), course led by [Rodrigo Mango](https://github.com/rmanguinho). In this course we develop an API using Node.JS, Typescript, Mongodb and all good programming practices, such as Clean Architecture, SOLID principles, TDD and Design Patterns. 🖋 Although i did this project following the course, i made my own changes and improvements.
 
 ## Building 🔧
 
@@ -54,6 +54,16 @@ yarn build && yarn start || npm run build && npm run start
 ###### Lint (eslint) 🎭
 
 - _Lint(fix)_ ❯ `yarn lint`
+
+###### Statistics of the types of commits 📊📈
+
+Following the standard of the [Conventional Commits](https://www.conventionalcommits.org/).
+
+- _feature commits(amount)_ ❯ `git shortlog -s --grep feat`
+- _test commits(amount)_ ❯ `git shortlog -s --grep test`
+- _refactor commits(amount)_ ❯ `git shortlog -s --grep refactor`
+- _chore commits(amount)_ ❯ `git shortlog -s --grep chore`
+- _docs commits(amount)_ ❯ `git shortlog -s --grep docs`
 
 ## Contact 📱
 
