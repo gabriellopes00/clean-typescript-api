@@ -1,6 +1,6 @@
 import { LoadAccountRepository } from '../../interfaces/db/load-account-repository'
 import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
-import { TokenGenerator } from '../../interfaces/cryptography/token-generator'
+import { Encrypter } from '../../interfaces/cryptography/encrypter'
 import { AccessTokenRepository } from '../../interfaces/db/access-token-repository'
 import {
   AuthenticationModel,
@@ -11,7 +11,7 @@ export class DbAuthentication implements Authenticator {
   constructor(
     private readonly loadAccountRepository: LoadAccountRepository,
     private readonly hashComparer: HashComparer,
-    private readonly tokenGenerator: TokenGenerator,
+    private readonly encrypter: Encrypter,
     private readonly accessTokenRepository: AccessTokenRepository
   ) {}
 
@@ -23,7 +23,7 @@ export class DbAuthentication implements Authenticator {
         account.password
       )
       if (isValid) {
-        const accessToken = await this.tokenGenerator.generate(account.id)
+        const accessToken = await this.encrypter.encrypt(account.id)
         await this.accessTokenRepository.store(account.id, accessToken)
         return accessToken
       }
