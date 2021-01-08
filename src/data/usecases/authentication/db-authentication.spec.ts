@@ -51,7 +51,7 @@ const makeEncrypterStub = (): Encrypter => {
 
 const makeAccessTokenRepositoryStub = (): AccessTokenRepository => {
   class AccessTokenRepositoryStub implements AccessTokenRepository {
-    async store(id: string, token: string): Promise<void> {
+    async storeAccessToken(id: string, token: string): Promise<void> {
       return new Promise((resolve, reject) => resolve())
     }
   }
@@ -180,16 +180,22 @@ describe('DbAuthentication Usecase', () => {
   // AccessToken repository tests
   test('Should call AccessTokenRepository with correct values', async () => {
     const { sut, accessTokenRepositoryStub } = makeSut()
-    const storeSpy = jest.spyOn(accessTokenRepositoryStub, 'store')
+    const storeAccessTokenSpy = jest.spyOn(
+      accessTokenRepositoryStub,
+      'storeAccessToken'
+    )
 
     await sut.authenticate(makeFakeAuthentication())
-    expect(storeSpy).toHaveBeenCalledWith(makeFakeAccount().id, 'any_token')
+    expect(storeAccessTokenSpy).toHaveBeenCalledWith(
+      makeFakeAccount().id,
+      'any_token'
+    )
   })
 
   test('Should throw if AccessTokenRepository throws', async () => {
     const { sut, accessTokenRepositoryStub } = makeSut()
     jest
-      .spyOn(accessTokenRepositoryStub, 'store')
+      .spyOn(accessTokenRepositoryStub, 'storeAccessToken')
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error()))
       )

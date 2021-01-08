@@ -24,7 +24,10 @@ export class DbAuthentication implements Authenticator {
       )
       if (isValid) {
         const accessToken = await this.encrypter.encrypt(account.id)
-        await this.accessTokenRepository.store(account.id, accessToken)
+        await this.accessTokenRepository.storeAccessToken(
+          account.id,
+          accessToken
+        )
         return accessToken
       }
     }
