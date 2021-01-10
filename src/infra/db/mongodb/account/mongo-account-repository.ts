@@ -1,9 +1,9 @@
-import { AddAccountRepository } from '@data/interfaces/db/add-account-repository'
+import { AddAccountRepository } from '@data/interfaces/db/account/add-account-repository'
 import { AddAccountModel } from '@domain/usecases/add-account'
 import { AccountModel } from '@domain/models/account'
 import { MongoHelper } from '../helpers/index'
-import { LoadAccountRepository } from '@data/interfaces/db/load-account-repository'
-import { AccessTokenRepository } from '@data/interfaces/db/access-token-repository'
+import { LoadAccountRepository } from '@data/interfaces/db/account/load-account-repository'
+import { AccessTokenRepository } from '@data/interfaces/db/account/access-token-repository'
 
 export class MongoAccountRepository // eslint-disable-next-line indent
   implements

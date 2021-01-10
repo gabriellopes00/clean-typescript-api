@@ -1,9 +1,9 @@
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo'
-import { LogMongoRepository } from './log'
+import { MongoLogRepository } from './mongo-log-repository'
 
-const makeSut = (): LogMongoRepository => {
-  return new LogMongoRepository()
+const makeSut = (): MongoLogRepository => {
+  return new MongoLogRepository()
 }
 
 describe('Log Mongo Repository', () => {
