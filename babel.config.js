@@ -15,11 +15,12 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '@presentation': './presentation',
-          '@main': './main',
-          '@domain': './domain',
-          '@data': './data',
-          '@infra': './infra'
+          '@presentation': './src/presentation',
+          '@main': './src/main',
+          '@domain': './src/domain',
+          '@data': './src/data',
+          '@infra': './src/infra',
+          '@utils': './src/utils'
         }
       }
     ]
