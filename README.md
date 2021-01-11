@@ -3,6 +3,12 @@
   <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
 </h1>
 
+![version badge](https://img.shields.io/badge/version-1.1.0-blue.svg)
+![releases badge](https://img.shields.io/badge/releases-2-blue.svg)
+![coverage badge](https://img.shields.io/badge/coverage-99.65%25-blue.svg)
+![stars badge](https://img.shields.io/github/stars/gabriellopes00/clean-typescript-api.svg)
+![license badge](https://img.shields.io/badge/license-MIT-blue.svg)
+
 ###### An API mande with
 
 <p>
@@ -43,27 +49,28 @@ yarn build && yarn start || npm run build && npm run start
 
 ###### Tests 🧪
 
-- _All_ ❯ `yarn test`
-- _Coverage_ ❯ `yarn test:ci`
-- _Watch_ ❯ `yarn test:watch`
-- _Unit(.spec)_ ❯ `yarn test:unit`
-- _Integration(.test)_ ❯ `yarn test:integration`
-- _Staged_ ❯ `yarn test:staged`
-- _Verbose(view logs)_ ❯ `yarn test:verbose`
+- _**All**_ ❯ `yarn test`
+- _**Coverage**_ ❯ `yarn test:ci`
+- _**Watch**_ ❯ `yarn test:watch`
+- _**Unit**(.spec)_ ❯ `yarn test:unit`
+- _**Integration**(.test)_ ❯ `yarn test:integration`
+- _**Staged**_ ❯ `yarn test:staged`
+- _**Verbose**(view logs)_ ❯ `yarn test:verbose`
 
 ###### Lint (eslint) 🎭
 
-- _Lint(fix)_ ❯ `yarn lint`
+- _**Lint**(fix)_ ❯ `yarn lint`
 
 ###### Statistics of the types of commits 📊📈
 
 Following the standard of the [Conventional Commits](https://www.conventionalcommits.org/).
 
-- _feature commits(amount)_ ❯ `git shortlog -s --grep feat`
-- _test commits(amount)_ ❯ `git shortlog -s --grep test`
-- _refactor commits(amount)_ ❯ `git shortlog -s --grep refactor`
-- _chore commits(amount)_ ❯ `git shortlog -s --grep chore`
-- _docs commits(amount)_ ❯ `git shortlog -s --grep docs`
+- _**feature** commits(amount)_ ❯ `git shortlog -s --grep feat`
+- _**test** commits(amount)_ ❯ `git shortlog -s --grep test`
+- _**refactor** commits(amount)_ ❯ `git shortlog -s --grep refactor`
+- _**chore** commits(amount)_ ❯ `git shortlog -s --grep chore`
+- _**docs** commits(amount)_ ❯ `git shortlog -s --grep docs`
+- _**build** commits(amount)_ ❯ `git shortlog -s --grep build`
 
 ## Contact 📱
 
