@@ -9,6 +9,8 @@
 ![stars badge](https://img.shields.io/github/stars/gabriellopes00/clean-typescript-api.svg)
 ![license badge](https://img.shields.io/badge/license-MIT-blue.svg)
 
+##### Server hosted at _[heroku](https://clean-typescript-api.herokuapp.com/)_. See the [documentation](#docs).
+
 ###### An API mande with
 
 <p>
@@ -17,6 +19,7 @@
   <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" alt="nodejs" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/eslint.svg" alt="eslint" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/jest.svg" height="30" alt="jest">
+  <img src="https://cdn.svgporn.com/logos/heroku-icon.svg" height="30" alt="heroku">
 </p>
 
 ## About this project ⚙
@@ -81,3 +84,9 @@ Following the standard of the [Conventional Commits](https://www.conventionalcom
 [![Facebook Badge](https://img.shields.io/badge/facebook-%231877F2.svg?&style=flat-square&logo=facebook&logoColor=white)](https://www.facebook.com/profile.php?id=100034920821684)
 [![Instagram Badge](https://img.shields.io/badge/instagram-%23E4405F.svg?&style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/_.gabriellopes/?hl=pt-br)
 [![StackOverflow Badge](https://img.shields.io/badge/stack%20overflow-FE7A16?logo=stack-overflow&logoColor=white&style=flat-square)](https://stackoverflow.com/users/14099025/gabriel-lopes?tab=profile)
+
+## Documentation 📚
+
+###### docs
+
+_the documentation is empty yet_
