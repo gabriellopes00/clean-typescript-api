@@ -1,3 +1,6 @@
+# Docker generated folders
+data
+
 # Logs
 logs
 *.log

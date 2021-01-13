@@ -1,0 +1,22 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo-container
+    image: mongo:4
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  api:
+    container_name: api-container
+    build: .
+    image: clean-typescript-api
+    restart: always
+    command: yarn start
+    volumes:
+      - ./dist:/usr/src/clean-typescript-api/dist
+    ports:
+      - "5050:5050"
+    links:
+      - mongo
