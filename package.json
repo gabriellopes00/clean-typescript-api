@@ -15,9 +15,11 @@
     "test:ci": "yarn test --coverage",
     "lint": "eslint src/** --fix",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/main/server.ts",
-    "up": "yarn build && docker-compose up",
+    "up": "yarn build && docker-compose up -d",
+    "down": "docker-compose down",
     "build": "rimraf ./dist && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "node dist/main/server.js"
+    "start": "node dist/main/server.js",
+    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

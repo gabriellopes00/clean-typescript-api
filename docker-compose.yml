@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   mongo:
     container_name: mongo-container
@@ -7,7 +7,7 @@ services:
     volumes:
       - ./data:/data/db
     ports:
-      - "27017:27017"
+      - '27017:27017'
   api:
     container_name: api-container
     build: .
@@ -16,7 +16,9 @@ services:
     command: yarn start
     volumes:
       - ./dist:/usr/src/clean-typescript-api/dist
+      - ./package.json:/usr/src/clean-typescript-api/package.json
     ports:
-      - "5050:5050"
+      - '5050:5050'
+      - '9222:9222'
     links:
       - mongo
