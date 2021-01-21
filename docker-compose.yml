@@ -10,12 +10,12 @@ services:
       - '27017:27017'
   api:
     container_name: api-container
-    build: .
-    image: clean-typescript-api
+    image: node:14
+    working_dir: /usr/src/clean-typescript-api
     restart: always
-    command: yarn start
+    command: bash -c "yarn install --only=prod && yarn start"
     volumes:
-      - ./dist:/usr/src/clean-typescript-api/dist
+      - ./dist/:/usr/src/clean-typescript-api/dist/
       - ./package.json:/usr/src/clean-typescript-api/package.json
     ports:
       - '5050:5050'
