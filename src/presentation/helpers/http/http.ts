@@ -1,6 +1,11 @@
 import { ServerError, UnauthorizedError } from '@presentation/errors/index'
 import { HttpResponse } from '@presentation/interfaces/http'
 
+export const forbidden = (error: Error): HttpResponse => ({
+  statusCode: 403,
+  body: error
+})
+
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
   body: error
