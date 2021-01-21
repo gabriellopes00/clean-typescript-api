@@ -6,11 +6,13 @@ import {
   HttpResponse,
   Validation
 } from './signup-controller-interfaces'
+import { Authenticator } from '@domain/usecases/authentication'
 
 export class SignUpController implements Controller {
   constructor(
     private readonly validation: Validation,
-    private readonly addAccount: AddAccount
+    private readonly addAccount: AddAccount,
+    private readonly authentication: Authenticator
   ) {}
 
   async handle(
@@ -22,6 +24,7 @@ export class SignUpController implements Controller {
 
       const { email, name, password } = httpRequest.body
       const account = await this.addAccount.add({ name, email, password })
+      await this.authentication.authenticate({ email, password })
 
       return ok(account)
     } catch (error) {
