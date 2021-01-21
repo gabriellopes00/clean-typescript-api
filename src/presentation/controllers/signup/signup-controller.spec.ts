@@ -143,4 +143,15 @@ describe('SingUp Controller', () => {
       password: 'gabriel123'
     })
   })
+  test('Should return 500 if Authenticators throws', async () => {
+    const { sut, authenticatorStub } = makeSut()
+    jest
+      .spyOn(authenticatorStub, 'authenticate')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 })
