@@ -19,8 +19,7 @@ module.exports = {
           '@main': './src/main',
           '@domain': './src/domain',
           '@data': './src/data',
-          '@infra': './src/infra',
-          '@utils': './src/utils'
+          '@infra': './src/infra'
         }
       }
     ]
