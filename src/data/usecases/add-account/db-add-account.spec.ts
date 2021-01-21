@@ -1,3 +1,4 @@
+import { LoadAccountRepository } from '../../interfaces/db/account/load-account-repository'
 import { DbAddAccount } from './db-add-account'
 import {
   Hasher,
@@ -10,6 +11,7 @@ interface SutTypes {
   sut: DbAddAccount
   hasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
+  loadAccountRepositoryStub: LoadAccountRepository
 }
 
 const makeFakeAccount = (): AccountModel => ({
@@ -40,11 +42,32 @@ const makeAddAccountRepository = (): AddAccountRepository => {
   return new AddAccountRepositoryStub()
 }
 
+const makeLoadAccountRepositoryStub = (): LoadAccountRepository => {
+  class LoadAccountRepositoryStub implements LoadAccountRepository {
+    async loadByEmail(email: string): Promise<AccountModel> {
+      const account = makeFakeAccount()
+      return new Promise((resolve, reject) => resolve(account))
+    }
+  }
+
+  return new LoadAccountRepositoryStub()
+}
+
 const makeSut = (): SutTypes => {
+  const loadAccountRepositoryStub = makeLoadAccountRepositoryStub()
   const hasherStub = makeHasher()
   const addAccountRepositoryStub = makeAddAccountRepository()
-  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub)
-  return { sut, hasherStub, addAccountRepositoryStub }
+  const sut = new DbAddAccount(
+    hasherStub,
+    addAccountRepositoryStub,
+    loadAccountRepositoryStub
+  )
+  return {
+    sut,
+    hasherStub,
+    addAccountRepositoryStub,
+    loadAccountRepositoryStub
+  }
 }
 
 describe('DbAccount Usecase', () => {
@@ -102,5 +125,14 @@ describe('DbAccount Usecase', () => {
     const { sut } = makeSut()
     const account = await sut.add(makeFakeAccountData())
     expect(account).toEqual(makeFakeAccount())
+  })
+
+  // LoadAccountRepository tests
+  test('Should call LoadAccountRepository with correct email', async () => {
+    const { sut, loadAccountRepositoryStub } = makeSut()
+    const loadByEmailSpy = jest.spyOn(loadAccountRepositoryStub, 'loadByEmail')
+
+    await sut.add(makeFakeAccountData())
+    expect(loadByEmailSpy).toHaveBeenCalledWith('gabrielluislopes00@gmail.com')
   })
 })
