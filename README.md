@@ -3,13 +3,15 @@
   <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
 </h1>
 
-![version badge](https://img.shields.io/badge/version-1.1.0-blue.svg)
-![releases badge](https://img.shields.io/badge/releases-2-blue.svg)
-![coverage badge](https://img.shields.io/badge/coverage-99.65%25-blue.svg)
+![version badge](https://img.shields.io/badge/version-1.1.1-blue.svg)
+![releases badge](https://img.shields.io/badge/releases-3-blue.svg)
+![coverage badge](https://img.shields.io/badge/coverage-99.34%25-blue.svg)
 ![stars badge](https://img.shields.io/github/stars/gabriellopes00/clean-typescript-api.svg)
 ![license badge](https://img.shields.io/badge/license-MIT-blue.svg)
 
-##### Server hosted at _[heroku](https://clean-typescript-api.herokuapp.com/)_. See the [documentation](#docs).
+##### Application hosted at _[heroku](https://www.heroku.com/)_.
+
+##### API url: _https://clean-typescript-api.herokuapp.com/_. See the [documentation](#documentation-).
 
 ###### An API mande with
 
@@ -17,6 +19,7 @@
   <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
   <img src="https://img.icons8.com/color/452/mongodb.png" alt="mongodb" width="35" height="35"/>
   <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" alt="nodejs" width="30" height="30"/>
+  <img src="https://cdn.svgporn.com/logos/docker-icon.svg" alt="docker" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/eslint.svg" alt="eslint" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/jest.svg" height="30" alt="jest">
   <img src="https://cdn.svgporn.com/logos/heroku-icon.svg" height="30" alt="heroku">
@@ -28,7 +31,7 @@ This is an API made in [NodeJs, Typescript, TDD, Clean Architecture e SOLID Cour
 
 ## Building 🔧
 
-You'll need [Node.js](https://nodejs.org), [Mongodb](https://www.mongodb.com/) and i recommend that you have installed the [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) on your computer. After, you can run the scripts below...
+You'll need [Node.js](https://nodejs.org), [Mongodb](https://www.mongodb.com/) and i recommend that you have installed the [Yarn](https://yarnpkg.com/getting-started/install) on your computer. After, you can run the scripts below...
 
 ###### Cloning Repository
 
@@ -50,7 +53,19 @@ yarn dev || npm run dev
 yarn build && yarn start || npm run build && npm run start
 ```
 
-###### Tests 🧪
+###### Docker 🐳
+
+You will need to have [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) installed on your computer to run the commands below. Running this commands the containers will be pulled [node:14](https://hub.docker.com/_/node) image and [mongo:4](https://hub.docker.com/_/mongo) image, and the containers will be created on top of this images.
+
+```upping
+yarn up || npm run up
+```
+
+```downing
+yarn down || npm run down
+```
+
+###### Tests (jest) 🧪
 
 - _**All**_ ❯ `yarn test`
 - _**Coverage**_ ❯ `yarn test:ci`
@@ -63,6 +78,10 @@ yarn build && yarn start || npm run build && npm run start
 ###### Lint (eslint) 🎭
 
 - _**Lint**(fix)_ ❯ `yarn lint`
+
+###### Debug 🐞
+
+- _**Debug**_ ❯ `yarn debug`
 
 ###### Statistics of the types of commits 📊📈
 
@@ -87,6 +106,26 @@ Following the standard of the [Conventional Commits](https://www.conventionalcom
 
 ## Documentation 📚
 
-###### docs
+- ###### API Routes 🔀
 
-_the documentation is empty yet_
+  - **_/api/signup/_**
+
+    - _expected data: { **name**, **email**, **password**, **passwordConfirmation** }_
+    - _expected data types: { **string**, **string(must be a valid email)**, **string**, **string(must be equal to password)** }_
+    - _success return: { accessToken(string) }_
+    - _errors:_
+      - _400: Invalid data received_
+      - _400: Missing param_
+      - _403: Email already registered_
+      - _404: Invalid route_
+      - _500: Internal server error_
+
+  - **_/api/login/_**
+    - _expected data: { **email**, **password** }_
+    - _expected data types: { **string(must be a valid email)**, **string** }_
+    - _success return: { accessToken(string) }_
+    - _errors:_
+      - _400: Missing param_
+      - _401: Invalid credentials_
+      - _404: Invalid route_
+      - _500: Internal server error_
