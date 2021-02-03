@@ -53,4 +53,14 @@ describe('DbLoadAccountByToken Usecase', () => {
     const account = await sut.load('any_token', 'any_role')
     expect(account).toBeNull()
   })
+
+  test('Should return null if loadAccountRepository returns null', async () => {
+    const account = await sut.load('any_token', 'any_role')
+    expect(account).toEqual({
+      id: 'any_id',
+      name: 'gabriel',
+      email: 'gabriel@mail.com',
+      password: 'hashed_password'
+    })
+  })
 })
