@@ -63,4 +63,26 @@ describe('DbLoadAccountByToken Usecase', () => {
       password: 'hashed_password'
     })
   })
+
+  test('Should throw if Decrypter throws', async () => {
+    jest
+      .spyOn(decrypterStub, 'decript')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+
+    const promise = sut.load('any_token', 'any_role')
+    await expect(promise).rejects.toThrow()
+  })
+
+  test('Should throw if LoadAccountByTokenRepository throws', async () => {
+    jest
+      .spyOn(loadAccountByTokenRepository, 'loadByToken')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
+
+    const promise = sut.load('any_token', 'any_role')
+    await expect(promise).rejects.toThrow()
+  })
 })
