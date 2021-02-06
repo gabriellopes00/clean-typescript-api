@@ -3,9 +3,9 @@
   <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
 </h1>
 
-![version badge](https://img.shields.io/badge/version-1.1.1-blue.svg)
-![releases badge](https://img.shields.io/badge/releases-3-blue.svg)
-![coverage badge](https://img.shields.io/badge/coverage-99.34%25-blue.svg)
+![version badge](https://img.shields.io/badge/version-1.2.1-blue.svg)
+[![Build Status](https://travis-ci.org/gabriellopes00/clean-typescript-api.svg?branch=main)](https://travis-ci.org/gabriellopes00/clean-typescript-api)
+[![Coverage Status](https://coveralls.io/repos/github/gabriellopes00/clean-typescript-api/badge.svg?branch=main)](https://coveralls.io/github/gabriellopes00/clean-typescript-api?branch=main)
 ![stars badge](https://img.shields.io/github/stars/gabriellopes00/clean-typescript-api.svg)
 ![license badge](https://img.shields.io/badge/license-MIT-blue.svg)
 
