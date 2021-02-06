@@ -4,12 +4,14 @@ import { AccountModel } from '@domain/models/account'
 import { MongoHelper } from '../helpers/index'
 import { LoadAccountRepository } from '@data/interfaces/db/account/load-account-repository'
 import { AccessTokenRepository } from '@data/interfaces/db/account/access-token-repository'
+import { LoadAccountByTokenRepository } from '@data/interfaces/db/account/load-account-by-token-repository'
 
 export class MongoAccountRepository // eslint-disable-next-line indent
   implements
     AddAccountRepository,
     LoadAccountRepository,
-    AccessTokenRepository {
+    AccessTokenRepository,
+    LoadAccountByTokenRepository {
   async add(accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
     const result = await accountCollection.insertOne(accountData)
@@ -33,5 +35,15 @@ export class MongoAccountRepository // eslint-disable-next-line indent
         $set: { accessToken: token }
       }
     )
+  }
+
+  async loadByToken(token: string, role?: string): Promise<AccountModel> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+    const account = await accountCollection.findOne({
+      accessToken: token,
+      role
+    })
+
+    return account !== null ? MongoHelper.map(account) : null
   }
 }
