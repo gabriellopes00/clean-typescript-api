@@ -103,6 +103,49 @@ describe('Account Mongodb Repository', () => {
       expect(account.password).toBe('1234')
     })
 
+    test('Should return an account on loadByToken success with adm role', async () => {
+      accountCollection.insertOne({
+        name: 'gabriel',
+        email: 'gabrielluislopes00@gmail.com',
+        password: '1234',
+        accessToken: 'any_token',
+        role: 'adm'
+      })
+      const account = await sut.loadByToken('any_token', 'adm')
+      expect(account).toBeTruthy()
+      expect(account.id).toBeTruthy()
+      expect(account.name).toBe('gabriel')
+      expect(account.email).toBe('gabrielluislopes00@gmail.com')
+      expect(account.password).toBe('1234')
+    })
+
+    test('Should return null on loadByToken success with invalid role', async () => {
+      accountCollection.insertOne({
+        name: 'gabriel',
+        email: 'gabrielluislopes00@gmail.com',
+        password: '1234',
+        accessToken: 'any_token'
+      })
+      const account = await sut.loadByToken('any_token', 'adm')
+      expect(account).toBeFalsy()
+    })
+
+    test('Should return an account on loadByToken success if user is adm', async () => {
+      accountCollection.insertOne({
+        name: 'gabriel',
+        email: 'gabrielluislopes00@gmail.com',
+        password: '1234',
+        accessToken: 'any_token',
+        role: 'adm'
+      })
+      const account = await sut.loadByToken('any_token')
+      expect(account).toBeTruthy()
+      expect(account.id).toBeTruthy()
+      expect(account.name).toBe('gabriel')
+      expect(account.email).toBe('gabrielluislopes00@gmail.com')
+      expect(account.password).toBe('1234')
+    })
+
     test('Should return null if loadByToken fails', async () => {
       const account = await sut.loadByToken('any_token')
       expect(account).toBeFalsy()

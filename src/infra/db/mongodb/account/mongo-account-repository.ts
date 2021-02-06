@@ -41,7 +41,7 @@ export class MongoAccountRepository // eslint-disable-next-line indent
     const accountCollection = await MongoHelper.getCollection('accounts')
     const account = await accountCollection.findOne({
       accessToken: token,
-      role
+      $or: [{ role }, { role: 'adm' }]
     })
 
     return account !== null ? MongoHelper.map(account) : null
