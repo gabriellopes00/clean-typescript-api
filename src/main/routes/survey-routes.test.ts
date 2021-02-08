@@ -22,45 +22,53 @@ beforeEach(async () => {
 })
 
 describe('Survey Routes', () => {
-  test('Should return 403 on add survey without accessToken', async () => {
-    await request(app)
-      .post('/api/surveys')
-      .send({
-        question: 'How many is 1 + 1 ?',
-        answers: [
-          {
-            image:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/NYCS-bull-trans-2.svg/768px-NYCS-bull-trans-2.svg.png',
-            answer: '2'
-          }
-        ]
+  describe('POST /surveys', () => {
+    test('Should return 403 on add survey without accessToken', async () => {
+      await request(app)
+        .post('/api/surveys')
+        .send({
+          question: 'How many is 1 + 1 ?',
+          answers: [
+            {
+              image:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/NYCS-bull-trans-2.svg/768px-NYCS-bull-trans-2.svg.png',
+              answer: '2'
+            }
+          ]
+        })
+        .expect(403)
+    })
+
+    test('Should return 204 on add survey with valid accessToken', async () => {
+      const account = await accountCollection.insertOne({
+        name: 'gabriel',
+        email: 'gabriel@example.com',
+        password: 'asdf',
+        role: 'adm'
       })
-      .expect(403)
+      const id = account.ops[0]._id
+      const accessToken = sign({ id }, env.jwtSecret)
+      await accountCollection.updateOne({ _id: id }, { $set: { accessToken } })
+      await request(app)
+        .post('/api/surveys')
+        .set('access-token', accessToken)
+        .send({
+          question: 'How many is 1 + 1 ?',
+          answers: [
+            {
+              image:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/NYCS-bull-trans-2.svg/768px-NYCS-bull-trans-2.svg.png',
+              answer: '2'
+            }
+          ]
+        })
+        .expect(403)
+    })
   })
 
-  test('Should return 204 on add survey with valid accessToken', async () => {
-    const account = await accountCollection.insertOne({
-      name: 'gabriel',
-      email: 'gabriel@example.com',
-      password: 'asdf',
-      role: 'adm'
+  describe('GET /surveys', () => {
+    test('Should return 403 on load survey without accessToken', async () => {
+      await request(app).get('/api/surveys').expect(403)
     })
-    const id = account.ops[0]._id
-    const accessToken = sign({ id }, env.jwtSecret)
-    await accountCollection.updateOne({ _id: id }, { $set: { accessToken } })
-    await request(app)
-      .post('/api/surveys')
-      .set('access-token', accessToken)
-      .send({
-        question: 'How many is 1 + 1 ?',
-        answers: [
-          {
-            image:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/NYCS-bull-trans-2.svg/768px-NYCS-bull-trans-2.svg.png',
-            answer: '2'
-          }
-        ]
-      })
-      .expect(403)
   })
 })
