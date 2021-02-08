@@ -4,3 +4,10 @@ node_js:
 scripts:
   - eslint 'src/**'
   - npm run test:coveralls
+deploy:
+  provider: heroku
+  api_key: $HEROKU_KEY
+  on:
+    all_branches: true
+  app: clean-typescript-api
+  skip_cleanup: true
