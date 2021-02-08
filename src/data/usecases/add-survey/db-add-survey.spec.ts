@@ -1,8 +1,10 @@
 import { DbAddSurvey } from './ad-add-survey'
 import { AddSurveyRepository } from '../../interfaces/db/survey/add-survey-repository'
 import { AddSurveyModel } from '../../../domain/usecases/add-survey'
+import MockDate from 'mockdate'
 
 const makeSurveyFakeData = (): AddSurveyModel => ({
+  date: new Date(),
   question: 'any_question',
   answers: [
     {
@@ -33,6 +35,8 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddSurvey Usecase', () => {
+  beforeAll(() => MockDate.set(new Date()))
+  afterAll(() => MockDate.reset())
   test('Should call AddSurveyRepository with correct values ', () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')

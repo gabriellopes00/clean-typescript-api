@@ -4,6 +4,7 @@ import { MongoHelper } from '../helpers/mongo'
 import { MongoSurveyRepository } from './mongo-survey-repository'
 
 const makeSurveyFakeData = (): AddSurveyModel => ({
+  date: new Date(),
   question: 'any_question',
   answers: [
     {
