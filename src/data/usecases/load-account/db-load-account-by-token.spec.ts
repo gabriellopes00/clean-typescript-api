@@ -1,6 +1,6 @@
-import { Decrypter } from '@data/interfaces/cryptography/decrypter'
+import { Decrypter } from '../../../data/interfaces/cryptography/decrypter'
 import { DbLoadAccountByToken } from './db-load-account-by-token'
-import { AccountModel } from '@domain/models/account.ts'
+import { AccountModel } from '../../../domain/models/account'
 import { LoadAccountByTokenRepository } from '../../interfaces/db/account/load-account-by-token-repository'
 
 class DecrypterStub implements Decrypter {

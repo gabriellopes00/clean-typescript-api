@@ -4,7 +4,7 @@ import {
   MissingParamError,
   ServerError,
   EmailAlreadyInUseError
-} from '@presentation/errors/index'
+} from '../../../presentation/errors/index'
 import {
   AddAccount,
   AddAccountModel,
@@ -15,7 +15,7 @@ import {
 import {
   AuthenticationModel,
   Authenticator
-} from '@domain/usecases/authentication'
+} from '../../../domain/usecases/authentication'
 
 interface SutTypes {
   sut: SignUpController

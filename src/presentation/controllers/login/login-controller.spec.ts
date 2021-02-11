@@ -11,7 +11,7 @@ import {
 import {
   AuthenticationModel,
   Authenticator
-} from '@domain/usecases/authentication'
+} from '../../../domain/usecases/authentication'
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {

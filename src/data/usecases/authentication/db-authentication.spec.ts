@@ -1,6 +1,6 @@
 import { DbAuthentication } from './db-authentication'
-import { AccountModel } from '../add-account/db-add-account-interfaces'
-import { AuthenticationModel } from '@domain/usecases/authentication'
+import { AccountModel } from '../../../domain/models/account'
+import { AuthenticationModel } from '../../../domain/usecases/authentication'
 import { LoadAccountRepository } from '../../interfaces/db/account/load-account-repository'
 import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
 import { Encrypter } from '../../interfaces/cryptography/encrypter'
