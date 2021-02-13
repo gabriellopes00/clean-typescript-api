@@ -39,11 +39,11 @@ describe('DbLoadSurveyById', () => {
     expect(surveys).toEqual(fakeSurvey)
   })
 
-  // test('Should throw LoadSurveyRepository throws', async () => {
-  //   jest
-  //     .spyOn(fakeLoadSurveyByIdRepository, 'loadById')
-  //     .mockRejectedValueOnce(new Error())
-  //   const error = sut.loadById('any_id')
-  //   await expect(error).rejects.toThrow()
-  // })
+  test('Should throw LoadSurveyByIdRepository throws', async () => {
+    jest
+      .spyOn(fakeLoadSurveyByIdRepository, 'loadById')
+      .mockRejectedValueOnce(new Error())
+    const error = sut.loadById('any_id')
+    await expect(error).rejects.toThrow()
+  })
 })
