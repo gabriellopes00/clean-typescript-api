@@ -5,11 +5,11 @@ import mockDate from 'mockdate'
 
 class FakeLoadSurveyByIdRepository implements LoadSurveyByIdRepository {
   async loadById(id: string): Promise<SurveyModel> {
-    return new Promise(resolve => resolve(fakeSurveys))
+    return new Promise(resolve => resolve(fakeSurvey))
   }
 }
 
-const fakeSurveys: SurveyModel = {
+const fakeSurvey: SurveyModel = {
   id: 'asdf',
   date: new Date(),
   question: 'any_question',
@@ -34,10 +34,10 @@ describe('DbLoadSurveyById', () => {
     expect(loadSpy).toHaveBeenCalledWith('any_id')
   })
 
-  // test('Should return a list of surveys on success', async () => {
-  //   const surveys = await sut.loadById('any_id')
-  //   expect(surveys).toEqual(fakeSurveys)
-  // })
+  test('Should return a survey on success', async () => {
+    const surveys = await sut.loadById('any_id')
+    expect(surveys).toEqual(fakeSurvey)
+  })
 
   // test('Should throw LoadSurveyRepository throws', async () => {
   //   jest
