@@ -38,6 +38,11 @@ describe('DbSaveSurveyResults Usecase', () => {
     expect(saveSpy).toHaveBeenCalledWith(fakeSaveSurveyData)
   })
 
+  test('Should return a SurveyModel on success', async () => {
+    const result = await sut.save(fakeSaveSurveyData)
+    expect(result).toEqual(fakeSurveyData)
+  })
+
   test('Should throw if SaveSurveyRepository throws', async () => {
     jest
       .spyOn(fakeSaveSurveyResultsRepository, 'save')
