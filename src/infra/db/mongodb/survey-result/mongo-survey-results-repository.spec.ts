@@ -12,6 +12,10 @@ const fakeSurveyData: SurveyModel = {
     {
       image: 'any_image',
       answer: 'answer'
+    },
+    {
+      image: 'another_image',
+      answer: 'another_answer'
     }
   ]
 }
@@ -64,6 +68,31 @@ describe('Survey Mongodb Repository', () => {
       expect(surveyResults).toBeTruthy()
       expect(surveyResults.id).toBeTruthy()
       expect(surveyResults.answer).toBe(survey.answers[0].answer)
+    })
+
+    test('Should update a survey result if its not new', async () => {
+      const insertedSurvey = await surveyCollection.insertOne(fakeSurveyData)
+      const survey = insertedSurvey.ops[0]
+
+      const insertedAccount = await accountCollection.insertOne(fakeAccount)
+      const account = insertedAccount.ops[0]
+
+      const insertedSurveyResults = await surveyResultsCollection.insertOne({
+        surveyId: survey.id,
+        answer: survey.answers[0].answer,
+        accountId: account.id,
+        date: new Date()
+      })
+
+      const surveyResults = await sut.save({
+        surveyId: survey.id,
+        answer: survey.answers[1].answer,
+        accountId: account.id,
+        date: new Date()
+      })
+      expect(surveyResults).toBeTruthy()
+      expect(surveyResults.id).toEqual(insertedSurveyResults.ops[0]._id)
+      expect(surveyResults.answer).toBe(survey.answers[1].answer)
     })
   })
 
