@@ -22,9 +22,13 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  // Change the "_id" returned from Mongodb to "id", understood by the AccountModel
-  map(account: any): any {
-    const { _id, ...presentationCollection } = account
+  // Change the "_id" returned from Mongodb to "id"
+  map(data: any): any {
+    const { _id, ...presentationCollection } = data
     return Object.assign({}, presentationCollection, { id: _id })
+  },
+
+  mapCollection(collection: any[]): any[] {
+    return collection.map(item => MongoHelper.map(item))
   }
 }

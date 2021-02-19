@@ -95,41 +95,4 @@ describe('Survey Mongodb Repository', () => {
       expect(surveyResults.answer).toBe(survey.answers[1].answer)
     })
   })
-
-  // describe('LoadAllSurveys', () => {
-  //   test('Should load all surveys on success', async () => {
-  //     const { sut } = makeSut()
-  //     await surveyCollection.insertMany(fakeSurveys)
-  //     const surveys = await sut.loadAll()
-  //     expect(surveys.length).toBe(2)
-  //     expect(surveys[0].id).toBe('asdf')
-  //     expect(surveys[1].id).toBe('fdsa')
-  //   })
-
-  //   test('Should load an empty list if there are not surveys registered', async () => {
-  //     const { sut } = makeSut()
-  //     const surveys = await sut.loadAll()
-  //     expect(surveys.length).toBe(0)
-  //     expect(surveys).toBeInstanceOf(Array)
-  //   })
-  // })
-
-  // describe('LoadSurveyById', () => {
-  //   test('Should load a survey by id on success', async () => {
-  //     const response = await surveyCollection.insertOne({
-  //       date: new Date(),
-  //       question: 'any_question',
-  //       answers: [
-  //         {
-  //           image: 'any_image',
-  //           answer: 'any_answer'
-  //         }
-  //       ]
-  //     })
-  //     const { sut } = makeSut()
-  //     const survey = await sut.loadById(response.ops[0].id)
-  //     expect(survey).toBeTruthy()
-  //     expect(survey.question).toBe('any_question')
-  //   })
-  // })
 })

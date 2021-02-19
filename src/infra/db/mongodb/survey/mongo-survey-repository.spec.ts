@@ -1,5 +1,4 @@
 import { Collection } from 'mongodb'
-import { SurveyModel } from '../../../../domain/models/survey'
 import { AddSurveyModel } from '../../../../domain/usecases/add-survey'
 import { MongoHelper } from '../helpers/mongo'
 import { MongoSurveyRepository } from './mongo-survey-repository'
@@ -15,9 +14,8 @@ const makeSurveyFakeData = (): AddSurveyModel => ({
   ]
 })
 
-const fakeSurveys: SurveyModel[] = [
+const fakeSurveys: AddSurveyModel[] = [
   {
-    id: 'asdf',
     date: new Date(),
     question: 'any_question',
     answers: [
@@ -28,7 +26,6 @@ const fakeSurveys: SurveyModel[] = [
     ]
   },
   {
-    id: 'fdsa',
     date: new Date(),
     question: 'other_question',
     answers: [
@@ -76,8 +73,8 @@ describe('Survey Mongodb Repository', () => {
       await surveyCollection.insertMany(fakeSurveys)
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(2)
-      expect(surveys[0].id).toBe('asdf')
-      expect(surveys[1].id).toBe('fdsa')
+      expect(surveys[0].id).toBeTruthy()
+      expect(surveys[1].id).toBeTruthy()
     })
 
     test('Should load an empty list if there are not surveys registered', async () => {
