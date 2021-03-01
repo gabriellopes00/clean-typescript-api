@@ -98,7 +98,7 @@ describe('Survey Mongodb Repository', () => {
         ]
       })
       const { sut } = makeSut()
-      const survey = await sut.loadById(response.ops[0].id)
+      const survey = await sut.loadById(response.ops[0]._id)
       expect(survey).toBeTruthy()
       expect(survey.question).toBe('any_question')
     })
