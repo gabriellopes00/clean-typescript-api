@@ -22,9 +22,8 @@ describe('Save survey result controller', () => {
   const fakeLoadSurveyById = new FakeLoadSurveyById() as jest.Mocked<FakeLoadSurveyById>
   const sut = new SaveSurveyResultController(fakeLoadSurveyById)
   const fakeRequest: HttpRequest = {
-    params: {
-      surveyId: 'any_id'
-    }
+    params: { surveyId: 'any_id' },
+    body: { answer: 'any_answer' }
   }
 
   test('Should call LoadSurveyById with correct values', async () => {
@@ -37,6 +36,14 @@ describe('Save survey result controller', () => {
     fakeLoadSurveyById.loadById.mockResolvedValueOnce(null)
     const response = await sut.handle(fakeRequest)
     expect(response).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 403 if an invalid response is provided', async () => {
+    const response = await sut.handle({
+      params: { surveyId: 'any_id' },
+      body: { answer: 'wrong_answer' }
+    })
+    expect(response).toEqual(forbidden(new InvalidParamError('answer')))
   })
 
   test('Should return 500 if LoadSurveyById throws', async () => {
