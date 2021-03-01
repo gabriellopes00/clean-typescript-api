@@ -1,0 +1,2 @@
+yarn run v1.22.10
+$ jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache
