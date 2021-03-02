@@ -1,11 +1,8 @@
+import { Hasher } from '@data/interfaces/cryptography/hasher'
+import { AddAccountRepository } from '@data/interfaces/db/account/add-account-repository'
 import { LoadAccountRepository } from '@data/interfaces/db/account/load-account-repository'
-import {
-  AddAccount,
-  AddAccountParams,
-  AccountModel,
-  AddAccountRepository,
-  Hasher
-} from './db-add-account-interfaces'
+import { AccountModel } from '@domain/models/account'
+import { AddAccount, AddAccountParams } from '@domain/usecases/add-account'
 
 export class DbAddAccount implements AddAccount {
   constructor(

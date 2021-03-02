@@ -1,8 +1,8 @@
-import { LoadAccountRepository } from '../../interfaces/db/account/load-account-repository'
-import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
-import { Encrypter } from '../../interfaces/cryptography/encrypter'
-import { AccessTokenRepository } from '../../interfaces/db/account/access-token-repository'
 import { AuthenticationParams, Authenticator } from '@domain/usecases/authentication'
+import { Encrypter } from '../../interfaces/cryptography/encrypter'
+import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
+import { AccessTokenRepository } from '../../interfaces/db/account/access-token-repository'
+import { LoadAccountRepository } from '../../interfaces/db/account/load-account-repository'
 
 export class DbAuthentication implements Authenticator {
   constructor(
