@@ -2,16 +2,8 @@ import { LoginController } from './login-controller'
 import { MissingParamError } from '../../errors'
 import { HttpRequest } from '../../interfaces/http'
 import { Validation } from '../../interfaces/validation'
-import {
-  badRequest,
-  ok,
-  serverError,
-  unauthorized
-} from '../../helpers/http/http'
-import {
-  AuthenticationModel,
-  Authenticator
-} from '../../../domain/usecases/authentication'
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/http'
+import { AuthenticationParams, Authenticator } from '../../../domain/usecases/authentication'
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
@@ -23,7 +15,7 @@ const makeValidation = (): Validation => {
 }
 const makeAuthenticator = (): Authenticator => {
   class AuthenticatorStub implements Authenticator {
-    async authenticate(data: AuthenticationModel): Promise<string> {
+    async authenticate(data: AuthenticationParams): Promise<string> {
       return new Promise((resolve, reject) => resolve('access_token'))
     }
   }
@@ -77,9 +69,7 @@ describe('Login Controller', () => {
     const { sut, authenticatorStub } = makeSut()
     jest
       .spyOn(authenticatorStub, 'authenticate')
-      .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error()))
-      )
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
 
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
@@ -105,9 +95,7 @@ describe('Login Controller', () => {
   test('Should return 400 if Validation returns an Error', async () => {
     const { sut, validationStub } = makeSut()
     // could be any error (below)
-    jest
-      .spyOn(validationStub, 'validate')
-      .mockReturnValueOnce(new MissingParamError('any_field'))
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
     const httpResponse = await sut.handle(makeFakeRequest())
 
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))

@@ -8,7 +8,7 @@ import { SurveyResultsModel } from '../../../domain/models/survey-results'
 
 import {
   SaveSurveyResults,
-  SaveSurveyResultsModel
+  SaveSurveyResultParams
 } from '../../../domain/usecases/save-survey-results'
 
 import mockDate from 'mockdate'
@@ -35,7 +35,7 @@ class FakeLoadSurveyById implements LoadSurveyById {
 }
 
 class FakeSaveSurveyResult implements SaveSurveyResults {
-  async save(data: SaveSurveyResultsModel): Promise<SurveyResultsModel> {
+  async save(data: SaveSurveyResultParams): Promise<SurveyResultsModel> {
     return fakeSurveyResult
   }
 }

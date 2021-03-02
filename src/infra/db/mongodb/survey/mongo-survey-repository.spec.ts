@@ -1,9 +1,9 @@
 import { Collection } from 'mongodb'
-import { AddSurveyModel } from '../../../../domain/usecases/add-survey'
+import { AddSurveyParams } from '../../../../domain/usecases/add-survey'
 import { MongoHelper } from '../helpers/mongo'
 import { MongoSurveyRepository } from './mongo-survey-repository'
 
-const makeSurveyFakeData = (): AddSurveyModel => ({
+const makeSurveyFakeData = (): AddSurveyParams => ({
   date: new Date(),
   question: 'any_question',
   answers: [
@@ -14,7 +14,7 @@ const makeSurveyFakeData = (): AddSurveyModel => ({
   ]
 })
 
-const fakeSurveys: AddSurveyModel[] = [
+const fakeSurveys: AddSurveyParams[] = [
   {
     date: new Date(),
     question: 'any_question',

@@ -1,10 +1,10 @@
 import { DbSaveSurveyResults } from './db-save-survey-result'
 import { SurveyResultsModel } from '../../../domain/models/survey-results'
-import { SaveSurveyResultsModel } from '../../../domain/usecases/save-survey-results'
+import { SaveSurveyResultParams } from '../../../domain/usecases/save-survey-results'
 import { SaveSurveyResultsRepository } from '../../interfaces/db/survey/save-survey-result-repository'
 import MockDate from 'mockdate'
 
-const fakeSaveSurveyData: SaveSurveyResultsModel = {
+const fakeSaveSurveyData: SaveSurveyResultParams = {
   date: new Date(),
   accountId: 'any_account_id',
   surveyId: 'any_survey_id',
@@ -20,7 +20,7 @@ const fakeSurveyData: SurveyResultsModel = {
 }
 
 class FakeSaveSurveyResultsRepository implements SaveSurveyResultsRepository {
-  async save(data: SaveSurveyResultsModel): Promise<SurveyResultsModel> {
+  async save(data: SaveSurveyResultParams): Promise<SurveyResultsModel> {
     return new Promise(resolve => resolve(fakeSurveyData))
   }
 }
@@ -44,9 +44,7 @@ describe('DbSaveSurveyResults Usecase', () => {
   })
 
   test('Should throw if SaveSurveyRepository throws', async () => {
-    jest
-      .spyOn(fakeSaveSurveyResultsRepository, 'save')
-      .mockRejectedValueOnce(new Error())
+    jest.spyOn(fakeSaveSurveyResultsRepository, 'save').mockRejectedValueOnce(new Error())
     const error = sut.save(fakeSaveSurveyData)
     await expect(error).rejects.toThrow()
   })

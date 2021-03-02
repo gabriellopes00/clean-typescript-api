@@ -1,16 +1,6 @@
-import {
-  badRequest,
-  serverError,
-  ok,
-  forbidden
-} from '@presentation/helpers/http/http'
-import { AddAccount, AddAccountModel } from '@domain/usecases/add-account'
-import {
-  Controller,
-  HttpRequest,
-  HttpResponse,
-  Validation
-} from './signup-controller-interfaces'
+import { badRequest, serverError, ok, forbidden } from '@presentation/helpers/http/http'
+import { AddAccount, AddAccountParams } from '@domain/usecases/add-account'
+import { Controller, HttpRequest, HttpResponse, Validation } from './signup-controller-interfaces'
 import { Authenticator } from '@domain/usecases/authentication'
 import { EmailAlreadyInUseError } from '@presentation/errors'
 
@@ -21,9 +11,7 @@ export class SignUpController implements Controller {
     private readonly authentication: Authenticator
   ) {}
 
-  async handle(
-    httpRequest: HttpRequest<AddAccountModel>
-  ): Promise<HttpResponse> {
+  async handle(httpRequest: HttpRequest<AddAccountParams>): Promise<HttpResponse> {
     try {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)

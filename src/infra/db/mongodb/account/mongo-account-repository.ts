@@ -1,5 +1,5 @@
 import { AddAccountRepository } from '@data/interfaces/db/account/add-account-repository'
-import { AddAccountModel } from '@domain/usecases/add-account'
+import { AddAccountParams } from '@domain/usecases/add-account'
 import { AccountModel } from '@domain/models/account'
 import { MongoHelper } from '../helpers/index'
 import { LoadAccountRepository } from '@data/interfaces/db/account/load-account-repository'
@@ -12,7 +12,7 @@ export class MongoAccountRepository // eslint-disable-next-line indent
     LoadAccountRepository,
     AccessTokenRepository,
     LoadAccountByTokenRepository {
-  async add(accountData: AddAccountModel): Promise<AccountModel> {
+  async add(accountData: AddAccountParams): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
     const result = await accountCollection.insertOne(accountData)
     const account = result.ops[0] // account inserted

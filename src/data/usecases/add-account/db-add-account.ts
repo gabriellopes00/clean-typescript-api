@@ -1,7 +1,7 @@
 import { LoadAccountRepository } from '@data/interfaces/db/account/load-account-repository'
 import {
   AddAccount,
-  AddAccountModel,
+  AddAccountParams,
   AccountModel,
   AddAccountRepository,
   Hasher
@@ -14,10 +14,8 @@ export class DbAddAccount implements AddAccount {
     private readonly loadAccountRepository: LoadAccountRepository
   ) {}
 
-  async add(accountData: AddAccountModel): Promise<AccountModel> {
-    const account = await this.loadAccountRepository.loadByEmail(
-      accountData.email
-    )
+  async add(accountData: AddAccountParams): Promise<AccountModel> {
+    const account = await this.loadAccountRepository.loadByEmail(accountData.email)
     if (!account) {
       const hashedPassword = await this.hasher.hash(accountData.password)
       const newAccount = await this.addAccountRepository.add(
