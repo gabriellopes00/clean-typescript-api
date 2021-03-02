@@ -21,8 +21,9 @@
   <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" alt="nodejs" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/docker-icon.svg" alt="docker" width="30" height="30"/>
   <img src="https://cdn.svgporn.com/logos/eslint.svg" alt="eslint" width="30" height="30"/>
-  <img src="https://cdn.svgporn.com/logos/jest.svg" height="30" alt="jest">
-  <img src="https://cdn.svgporn.com/logos/heroku-icon.svg" height="30" alt="heroku">
+  <img src="https://cdn.svgporn.com/logos/jest.svg" alt="jest" height="30">
+  <img src="https://cdn.svgporn.com/logos/heroku-icon.svg" alt="heroku" height="30">
+  <img src="https://cdn.svgporn.com/logos/travis-ci.svg" alt="travis-ci" height="30">
 </p>
 
 ## About this project ⚙
@@ -108,7 +109,7 @@ Following the standard of the [Conventional Commits](https://www.conventionalcom
 
 - ###### API Routes 🔀
 
-  - **_/api/signup/_**
+  - **_/api/signup/_** **:: POST**
 
     - _expected data: { **name**, **email**, **password**, **passwordConfirmation** }_
     - _expected data types: { **string**, **string(must be a valid email)**, **string**, **string(must be equal to password)** }_
@@ -120,7 +121,8 @@ Following the standard of the [Conventional Commits](https://www.conventionalcom
       - _404: Invalid route_
       - _500: Internal server error_
 
-  - **_/api/login/_**
+  - **_/api/login/_** **:: POST**
+
     - _expected data: { **email**, **password** }_
     - _expected data types: { **string(must be a valid email)**, **string** }_
     - _success return: { accessToken(string) }_
@@ -129,3 +131,41 @@ Following the standard of the [Conventional Commits](https://www.conventionalcom
       - _401: Invalid credentials_
       - _404: Invalid route_
       - _500: Internal server error_
+
+  - **_/api/surveys/_** **:: POST**
+  - _expected data: { **question**, **answers** }_
+  - _expected headers: { **accessToken (string)** }_
+  - _expected data types: { **string**, **Array[{image: string, answer: string}]** }_
+  - _success return: {**NO CONTENT**}_
+  - _errors:_
+
+    - _200: Success_
+    - _400: Missing param_
+    - _404: Invalid route_
+    - _403: Access Denied_
+    - _500: Internal server error_
+
+  - **_/api/surveys/_** **:: GET**
+  - _expected data: { **NO DATA** }_
+  - _expected headers: { **accessToken (string)** }_
+  - _success return: a list of the registered surveys with: { **date, question, and the correspondents answers**}_
+  - _errors:_
+
+    - _200: Success_
+    - _400: Missing param_
+    - _404: Invalid route_
+    - _403: Access Denied_
+    - _500: Internal server error_
+
+  - **_/api/surveys/:surveyId/results_** **:: PUT**
+  - _expected data: { **answer** }_
+  - _expected data type: { **string** }_
+  - _expected params: { **surveyId :: the required survey id (string)** }_
+  - _expected headers: { **accessToken (string)** }_
+  - _success return: data of the submitted answer: {**accountId(string), surveyId(string), answer(string), date(Date), id(string)**}_
+  - _errors:_
+    - _200: Success_
+    - _400: Missing param_
+    - _404: Invalid route_
+    - _403: Access Denied_
+    - _500: Internal server error_
