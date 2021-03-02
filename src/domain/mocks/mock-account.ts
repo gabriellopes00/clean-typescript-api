@@ -1,6 +1,5 @@
 import { AccountModel } from '@domain/models/account'
 import { AddAccountParams } from '@domain/usecases/add-account'
-import { HttpRequest } from '@presentation/interfaces'
 
 export const fakeAccountModel: AccountModel = {
   id: 'any_id',
@@ -15,6 +14,7 @@ export const fakeAccountParams: AddAccountParams = {
   password: 'any_password'
 }
 
-export const fakeHttpRequest: HttpRequest<AddAccountParams> = {
-  body: { ...fakeAccountParams }
+export const fakeLoginParams: Pick<AddAccountParams, 'email' | 'password'> = {
+  email: 'any@mail.com',
+  password: 'any_password'
 }
