@@ -1,56 +1,15 @@
 import { Collection } from 'mongodb'
-import { AddSurveyParams } from '../../../../domain/usecases/add-survey'
+import { fakeSurveyParams, fakeSurveysModel } from '../../../../domain/mocks/mock-survey'
 import { MongoHelper } from '../helpers/mongo'
 import { MongoSurveyRepository } from './mongo-survey-repository'
-
-const makeSurveyFakeData = (): AddSurveyParams => ({
-  date: new Date(),
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'answer'
-    }
-  ]
-})
-
-const fakeSurveys: AddSurveyParams[] = [
-  {
-    date: new Date(),
-    question: 'any_question',
-    answers: [
-      {
-        image: 'any_image',
-        answer: 'any_answer'
-      }
-    ]
-  },
-  {
-    date: new Date(),
-    question: 'other_question',
-    answers: [
-      {
-        image: 'other_image',
-        answer: 'other_answer'
-      }
-    ]
-  }
-]
-
-const makeSut = () => {
-  const sut = new MongoSurveyRepository()
-  return { sut }
-}
 
 let surveyCollection: Collection
 
 describe('Survey Mongodb Repository', () => {
-  beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
-  })
-  afterAll(async () => {
-    await MongoHelper.disconnect()
-  })
+  const sut = new MongoSurveyRepository()
+
+  beforeAll(async () => await MongoHelper.connect(process.env.MONGO_URL))
+  afterAll(async () => await MongoHelper.disconnect())
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
@@ -58,19 +17,15 @@ describe('Survey Mongodb Repository', () => {
 
   describe('AddSurvey', () => {
     test('Should add a survey on success', async () => {
-      const { sut } = makeSut()
-      await sut.add(makeSurveyFakeData())
-      const survey = await surveyCollection.findOne({
-        question: 'any_question'
-      })
+      await sut.add({ ...fakeSurveyParams, date: new Date() })
+      const survey = await surveyCollection.findOne({ question: 'any_question' })
       expect(survey).toBeTruthy()
     })
   })
 
   describe('LoadAllSurveys', () => {
     test('Should load all surveys on success', async () => {
-      const { sut } = makeSut()
-      await surveyCollection.insertMany(fakeSurveys)
+      await surveyCollection.insertMany(fakeSurveysModel)
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(2)
       expect(surveys[0].id).toBeTruthy()
@@ -78,7 +33,6 @@ describe('Survey Mongodb Repository', () => {
     })
 
     test('Should load an empty list if there are not surveys registered', async () => {
-      const { sut } = makeSut()
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(0)
       expect(surveys).toBeInstanceOf(Array)
@@ -87,17 +41,8 @@ describe('Survey Mongodb Repository', () => {
 
   describe('LoadSurveyById', () => {
     test('Should load a survey by id on success', async () => {
-      const response = await surveyCollection.insertOne({
-        date: new Date(),
-        question: 'any_question',
-        answers: [
-          {
-            image: 'any_image',
-            answer: 'any_answer'
-          }
-        ]
-      })
-      const { sut } = makeSut()
+      const response = await surveyCollection.insertOne({ ...fakeSurveyParams })
+
       const survey = await sut.loadById(response.ops[0]._id)
       expect(survey).toBeTruthy()
       expect(survey.question).toBe('any_question')

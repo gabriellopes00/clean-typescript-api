@@ -2,47 +2,34 @@ import { SurveyModel } from '../../../domain/models/survey'
 import { LoadSurveyByIdRepository } from '../../interfaces/db/survey/load-survey-by-id-repository'
 import { DbLoadSurveyById } from './load-survey-by-id'
 import mockDate from 'mockdate'
+import { fakeSurveyModel } from '../../../domain/mocks/mock-survey'
 
-class FakeLoadSurveyByIdRepository implements LoadSurveyByIdRepository {
+class MockLoadSurveyByIdRepository implements LoadSurveyByIdRepository {
   async loadById(id: string): Promise<SurveyModel> {
-    return new Promise(resolve => resolve(fakeSurvey))
+    return new Promise(resolve => resolve(fakeSurveyModel))
   }
 }
 
-const fakeSurvey: SurveyModel = {
-  id: 'asdf',
-  date: new Date(),
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'any_answer'
-    }
-  ]
-}
-
 describe('DbLoadSurveyById', () => {
-  const fakeLoadSurveyByIdRepository = new FakeLoadSurveyByIdRepository()
-  const sut = new DbLoadSurveyById(fakeLoadSurveyByIdRepository)
+  const mockLoadSurveyByIdRepository = new MockLoadSurveyByIdRepository() as jest.Mocked<MockLoadSurveyByIdRepository>
+  const sut = new DbLoadSurveyById(mockLoadSurveyByIdRepository)
 
   beforeAll(() => mockDate.set(new Date()))
   afterAll(() => mockDate.reset())
 
   test('Should call LoadSurveyRepository', async () => {
-    const loadSpy = jest.spyOn(fakeLoadSurveyByIdRepository, 'loadById')
+    const loadSpy = jest.spyOn(mockLoadSurveyByIdRepository, 'loadById')
     await sut.loadById('any_id')
     expect(loadSpy).toHaveBeenCalledWith('any_id')
   })
 
   test('Should return a survey on success', async () => {
     const surveys = await sut.loadById('any_id')
-    expect(surveys).toEqual(fakeSurvey)
+    expect(surveys).toEqual(fakeSurveyModel)
   })
 
   test('Should throw LoadSurveyByIdRepository throws', async () => {
-    jest
-      .spyOn(fakeLoadSurveyByIdRepository, 'loadById')
-      .mockRejectedValueOnce(new Error())
+    mockLoadSurveyByIdRepository.loadById.mockRejectedValueOnce(new Error())
     const error = sut.loadById('any_id')
     await expect(error).rejects.toThrow()
   })

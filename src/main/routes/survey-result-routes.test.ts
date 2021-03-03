@@ -4,23 +4,23 @@ import app from '../config/app'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo'
 import { sign } from 'jsonwebtoken'
 import env from '../config/env'
+import { fakeSurveyParams } from '../../domain/mocks/mock-survey'
+import { fakeAccountParams } from '../../domain/mocks/mock-account'
 
 let surveyCollection: Collection
 let accountCollection: Collection
 
 describe('Survey Routes', () => {
-  beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
-  })
-  afterAll(async () => {
-    await MongoHelper.disconnect()
-  })
+  beforeAll(async () => await MongoHelper.connect(process.env.MONGO_URL))
+  afterAll(async () => await MongoHelper.disconnect())
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
+
     accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
+
   describe('PUT /surveys/:surveyId/results', () => {
     test('Should return 403 on save survey result without accessToken', async () => {
       await request(app)
@@ -30,17 +30,9 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 200 on save survey result with accessToken', async () => {
-      const res = await surveyCollection.insertOne({
-        question: 'any_question',
-        answers: [{ answer: 'any_answer', image: 'any_image' }, { answer: 'another_answer' }],
-        date: new Date()
-      })
+      const res = await surveyCollection.insertOne({ ...fakeSurveyParams, date: new Date() })
 
-      const account = await accountCollection.insertOne({
-        name: 'gabriel',
-        email: 'gabriel@example.com',
-        password: 'asdf'
-      })
+      const account = await accountCollection.insertOne(fakeAccountParams)
       const id = account.ops[0]._id
       const accessToken = sign({ id }, env.jwtSecret)
       await accountCollection.updateOne({ _id: id }, { $set: { accessToken } })

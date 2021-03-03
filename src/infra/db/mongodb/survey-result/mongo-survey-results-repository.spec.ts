@@ -1,31 +1,8 @@
-import { SurveyModel } from '../../../../domain/models/survey'
-import { AccountModel } from '../../../../domain/models/account'
+import { Collection } from 'mongodb'
+import { fakeAccountModel } from '../../../../domain/mocks/mock-account'
+import { fakeSurveyModel } from '../../../../domain/mocks/mock-survey'
 import { MongoHelper } from '../helpers/mongo'
 import { MongoSurveyResultRepository } from './mongo-survey-results-repository'
-import { Collection } from 'mongodb'
-
-const fakeSurveyData: SurveyModel = {
-  id: 'any_id',
-  date: new Date(),
-  question: 'any_question',
-  answers: [
-    {
-      image: 'any_image',
-      answer: 'answer'
-    },
-    {
-      image: 'another_image',
-      answer: 'another_answer'
-    }
-  ]
-}
-
-const fakeAccount: AccountModel = {
-  id: 'any_id',
-  email: 'any_email@mail.com',
-  name: 'any_name',
-  password: 'any_password'
-}
 
 let surveyCollection: Collection
 let surveyResultsCollection: Collection
@@ -34,12 +11,8 @@ let accountCollection: Collection
 describe('Survey Mongodb Repository', () => {
   const sut = new MongoSurveyResultRepository()
 
-  beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
-  })
-  afterAll(async () => {
-    await MongoHelper.disconnect()
-  })
+  beforeAll(async () => await MongoHelper.connect(process.env.MONGO_URL))
+  afterAll(async () => await MongoHelper.disconnect())
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
@@ -53,10 +26,10 @@ describe('Survey Mongodb Repository', () => {
 
   describe('SaveSurveyResults', () => {
     test('Should add a survey result if its new', async () => {
-      const insertedSurvey = await surveyCollection.insertOne(fakeSurveyData)
+      const insertedSurvey = await surveyCollection.insertOne(fakeSurveyModel)
       const survey = insertedSurvey.ops[0]
 
-      const insertedAccount = await accountCollection.insertOne(fakeAccount)
+      const insertedAccount = await accountCollection.insertOne(fakeAccountModel)
       const account = insertedAccount.ops[0]
 
       const surveyResults = await sut.save({
@@ -71,10 +44,10 @@ describe('Survey Mongodb Repository', () => {
     })
 
     test('Should update a survey result if its not new', async () => {
-      const insertedSurvey = await surveyCollection.insertOne(fakeSurveyData)
+      const insertedSurvey = await surveyCollection.insertOne(fakeSurveyModel)
       const survey = insertedSurvey.ops[0]
 
-      const insertedAccount = await accountCollection.insertOne(fakeAccount)
+      const insertedAccount = await accountCollection.insertOne(fakeAccountModel)
       const account = insertedAccount.ops[0]
 
       const insertedSurveyResults = await surveyResultsCollection.insertOne({

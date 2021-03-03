@@ -1,59 +1,31 @@
 import { SurveyModel } from '../../../domain/models/survey'
 import { LoadSurveyRepository } from '../../interfaces/db/survey/load-survey-repository'
 import { DbLoadSurvey } from './db-load-survey'
+import { fakeSurveysModel } from '../../../domain/mocks/mock-survey'
 
-class FakeLoadSurveyRepository implements LoadSurveyRepository {
+class MockAdSurveyRepository implements LoadSurveyRepository {
   async loadAll(): Promise<SurveyModel[]> {
-    return new Promise(resolve => resolve(fakeSurveys))
+    return new Promise(resolve => resolve(fakeSurveysModel))
   }
 }
 
-const fakeSurveys: SurveyModel[] = [
-  {
-    id: 'asdf',
-    date: new Date(),
-    question: 'any_question',
-    answers: [
-      {
-        image: 'any_image',
-        answer: 'any_answer'
-      }
-    ]
-  },
-  {
-    id: 'fdas',
-    date: new Date(),
-    question: 'other_question',
-    answers: [
-      {
-        image: 'other_image',
-        answer: 'other_answer'
-      }
-    ]
-  }
-]
-
 describe('DbLoadSurvey', () => {
-  const fakeLoadSurveyRepository = new FakeLoadSurveyRepository()
-  const sut = new DbLoadSurvey(fakeLoadSurveyRepository)
+  const mockAdSurveyRepository = new MockAdSurveyRepository() as jest.Mocked<MockAdSurveyRepository>
+  const sut = new DbLoadSurvey(mockAdSurveyRepository)
 
   test('Should call LoadSurveyRepository', async () => {
-    const loadSpy = jest.spyOn(fakeLoadSurveyRepository, 'loadAll')
+    const loadSpy = jest.spyOn(mockAdSurveyRepository, 'loadAll')
     await sut.load()
     expect(loadSpy).toHaveBeenCalled()
   })
 
   test('Should return a list of surveys on success', async () => {
     const surveys = await sut.load()
-    expect(surveys).toEqual(fakeSurveys)
+    expect(surveys).toEqual(fakeSurveysModel)
   })
 
   test('Should throw LoadSurveyRepository throws', async () => {
-    jest.spyOn(fakeLoadSurveyRepository, 'loadAll').mockReturnValueOnce(
-      new Promise((resolve, reject) => {
-        reject(new Error())
-      })
-    )
+    mockAdSurveyRepository.loadAll.mockRejectedValueOnce(new Error())
     const error = sut.load()
     await expect(error).rejects.toThrow()
   })
