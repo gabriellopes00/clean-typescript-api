@@ -7,7 +7,8 @@ module.exports = {
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/**/*-interfaces.ts',
     '!**/interfaces/**',
-    '!<rootDir>/src/main/**'
+    '!<rootDir>/src/main/**',
+    '!<rootDir>/src/@types/**'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',

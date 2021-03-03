@@ -1,5 +1,5 @@
-import { AccountModel } from '@domain/models/account'
-import { AddAccountParams } from '@domain/usecases/add-account'
+import { AccountModel } from '../models/account'
+import { AddAccountParams } from '../usecases/add-account'
 
 export const fakeAccountModel: AccountModel = {
   id: 'any_id',
