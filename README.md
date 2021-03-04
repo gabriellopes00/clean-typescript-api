@@ -24,6 +24,7 @@
   <img src="https://cdn.svgporn.com/logos/jest.svg" alt="jest" height="30">
   <img src="https://cdn.svgporn.com/logos/heroku-icon.svg" alt="heroku" height="30">
   <img src="https://cdn.svgporn.com/logos/travis-ci.svg" alt="travis-ci" height="30">
+  <img src="https://cdn.svgporn.com/logos/swagger.svg" alt="swagger" height="30">
 </p>
 
 ## About this project ⚙
