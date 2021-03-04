@@ -3,9 +3,9 @@
   <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
 </h1>
 
-![version badge](https://img.shields.io/badge/version-1.2.1-blue.svg)
+![version badge](https://img.shields.io/badge/version-1.5.0-blue.svg)
 [![Build Status](https://travis-ci.org/gabriellopes00/clean-typescript-api.svg?branch=main)](https://travis-ci.org/gabriellopes00/clean-typescript-api)
-[![Coverage Status](https://coveralls.io/repos/github/gabriellopes00/clean-typescript-api/badge.svg?branch=main)](https://coveralls.io/github/gabriellopes00/clean-typescript-api?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/gabriellopes00/clean-typescript-api/badge.svg)](https://coveralls.io/github/gabriellopes00/clean-typescript-api)
 ![stars badge](https://img.shields.io/github/stars/gabriellopes00/clean-typescript-api.svg)
 ![license badge](https://img.shields.io/badge/license-MIT-blue.svg)
 
@@ -133,39 +133,39 @@ Following the standard of the [Conventional Commits](https://www.conventionalcom
       - _500: Internal server error_
 
   - **_/api/surveys/_** **:: POST**
-  - _expected data: { **question**, **answers** }_
-  - _expected headers: { **accessToken (string)** }_
-  - _expected data types: { **string**, **Array[{image: string, answer: string}]** }_
-  - _success return: {**NO CONTENT**}_
-  - _errors:_
 
-    - _200: Success_
-    - _400: Missing param_
-    - _404: Invalid route_
-    - _403: Access Denied_
-    - _500: Internal server error_
+    - _expected data: { **question**, **answers** }_
+    - _expected headers: { **accessToken (string)** }_
+    - _expected data types: { **string**, **Array[{image: string, answer: string}]** }_
+    - _success return: {**NO CONTENT**}_
+    - _errors:_
+      - _200: Success_
+      - _400: Missing param_
+      - _404: Invalid route_
+      - _403: Access Denied_
+      - _500: Internal server error_
 
   - **_/api/surveys/_** **:: GET**
-  - _expected data: { **NO DATA** }_
-  - _expected headers: { **accessToken (string)** }_
-  - _success return: a list of the registered surveys with: { **date, question, and the correspondents answers**}_
-  - _errors:_
 
-    - _200: Success_
-    - _400: Missing param_
-    - _404: Invalid route_
-    - _403: Access Denied_
-    - _500: Internal server error_
+    - _expected data: { **NO DATA** }_
+    - _expected headers: { **accessToken (string)** }_
+    - _success return: a list of the registered surveys with: { **date, question, and the correspondents answers**}_
+    - _errors:_
+      - _200: Success_
+      - _400: Missing param_
+      - _404: Invalid route_
+      - _403: Access Denied_
+      - _500: Internal server error_
 
   - **_/api/surveys/:surveyId/results_** **:: PUT**
-  - _expected data: { **answer** }_
-  - _expected data type: { **string** }_
-  - _expected params: { **surveyId :: the required survey id (string)** }_
-  - _expected headers: { **accessToken (string)** }_
-  - _success return: data of the submitted answer: {**accountId(string), surveyId(string), answer(string), date(Date), id(string)**}_
-  - _errors:_
-    - _200: Success_
-    - _400: Missing param_
-    - _404: Invalid route_
-    - _403: Access Denied_
-    - _500: Internal server error_
+    - _expected data: { **answer** }_
+    - _expected data type: { **string** }_
+    - _expected params: { **surveyId :: the required survey id (string)** }_
+    - _expected headers: { **accessToken (string)** }_
+    - _success return: data of the submitted answer: {**accountId(string), surveyId(string), answer(string), date(Date), id(string)**}_
+    - _errors:_
+      - _200: Success_
+      - _400: Missing param_
+      - _404: Invalid route_
+      - _403: Access Denied_
+      - _500: Internal server error_
