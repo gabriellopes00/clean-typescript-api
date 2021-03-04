@@ -7,6 +7,7 @@ import { loginPath } from './paths/login-path'
 import { signUpPath } from './paths/signup-path'
 import { surveysPath } from './paths/surveys-path'
 import { accountSchema } from './schemas/account-schema'
+import { addSurveySchema } from './schemas/add-survey-schema'
 import { apiKeyAuthSchema } from './schemas/api-key-auth-schema'
 import { errorSchema } from './schemas/error-schema'
 import { loginSchema } from './schemas/login-schema'
@@ -40,7 +41,8 @@ export default {
     survey: surveySchema,
     surveys: surveysSchema,
     surveyAnswer: surveyAnswerSchema,
-    signup: signUpSchema
+    signup: signUpSchema,
+    addSurvey: addSurveySchema
   },
   components: {
     securitySchemes: {
