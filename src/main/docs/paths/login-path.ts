@@ -5,22 +5,17 @@ export const loginPath = {
     requestBody: {
       description:
         'This path must receive an email and a password of the user which is trying to log in.',
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/schemas/login'
-          }
-        }
-      }
+      content: { 'application/json': { schema: { $ref: '#/schemas/login' } } }
     },
     responses: {
       200: {
         description: 'Success',
         content: { 'application/json': { schema: { $ref: '#schemas/account' } } }
       },
-      400: {
-        description: 'Bad Request - Route not found'
-      }
+      400: { $ref: '#/components/badRequest' },
+      404: { $ref: '#/components/notFound' },
+      500: { $ref: '#/components/serverError' },
+      401: { $ref: '#/components/unauthorized' }
     }
   }
 }
