@@ -15,6 +15,7 @@ import { loginSchema } from './schemas/login-schema'
 import { saveSurveySchema } from './schemas/save-survey-schema'
 import { signUpSchema } from './schemas/signup-schema'
 import { surveyAnswerSchema } from './schemas/survey-answer-schema'
+import { surveyResultAnswerSchema } from './schemas/survey-result-answer-schema'
 import { surveyResultSchema } from './schemas/survey-result-schema'
 import { surveySchema } from './schemas/survey-schema'
 import { surveysSchema } from './schemas/surveys-schema'
@@ -48,7 +49,9 @@ export default {
     signup: signUpSchema,
     addSurvey: addSurveySchema,
     saveSurvey: saveSurveySchema,
-    saveResultSurvey: surveyResultSchema
+    saveResultSurvey: surveyResultSchema,
+    surveyResult: surveyResultSchema,
+    surveyResultAnswer: surveyResultAnswerSchema
   },
   components: {
     securitySchemes: {
