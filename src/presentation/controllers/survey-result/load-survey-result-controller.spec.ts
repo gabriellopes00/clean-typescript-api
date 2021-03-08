@@ -51,4 +51,10 @@ describe('LoadSurvey Controller', () => {
     await sut.handle(fakeRequest)
     expect(loadSpy).toHaveBeenCalledWith(fakeRequest.params.surveyId)
   })
+
+  test('Should return 500 if LoadSurveyResult throws', async () => {
+    mockLoadSurveyResult.load.mockRejectedValueOnce(new Error())
+    const response = await sut.handle(fakeRequest)
+    expect(response).toEqual(serverError(new Error()))
+  })
 })
