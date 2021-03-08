@@ -1,3 +1,4 @@
+import { LoadSurveyResultRepository } from '@data/interfaces/db/survey/load-survey-results-repository'
 import { SaveSurveyResultsRepository } from '@data/interfaces/db/survey/save-survey-result-repository'
 import { SurveyResultsModel } from '@domain/models/survey-results'
 import { SaveSurveyResultParams } from '@domain/usecases/save-survey-results'
@@ -5,7 +6,8 @@ import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo'
 import { QueryBuilder } from '../helpers/query-bulder'
 
-export class MongoSurveyResultRepository implements SaveSurveyResultsRepository {
+export class MongoSurveyResultRepository
+implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
   async save(data: SaveSurveyResultParams): Promise<SurveyResultsModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate(
@@ -17,33 +19,21 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
     return surveyResult
   }
 
-  private async loadBySurveyId(surveyId: string): Promise<SurveyResultsModel> {
+  public async loadBySurveyId(surveyId: string): Promise<SurveyResultsModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
         surveyId: new ObjectId(surveyId)
       })
-      .group({
-        _id: 0,
-        data: {
-          $push: '$$ROOT'
-        },
-        total: {
-          $sum: 1
-        }
-      })
-      .unwind({
-        path: '$data'
-      })
+      .group({ _id: 0, data: { $push: '$$ROOT' }, total: { $sum: 1 } })
+      .unwind({ path: '$data' })
       .lookup({
         from: 'surveys',
         foreignField: '_id',
         localField: 'data.surveyId',
         as: 'survey'
       })
-      .unwind({
-        path: '$survey'
-      })
+      .unwind({ path: '$survey' })
       .group({
         _id: {
           surveyId: '$survey._id',
@@ -53,9 +43,7 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
           answer: '$data.answer',
           answers: '$survey.answers'
         },
-        count: {
-          $sum: 1
-        }
+        count: { $sum: 1 }
       })
       .project({
         _id: 0,
@@ -72,25 +60,16 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
                 {
                   count: {
                     $cond: {
-                      if: {
-                        $eq: ['$$item.answer', '$_id.answer']
-                      },
+                      if: { $eq: ['$$item.answer', '$_id.answer'] },
                       then: '$count',
                       else: 0
                     }
                   },
                   percent: {
                     $cond: {
-                      if: {
-                        $eq: ['$$item.answer', '$_id.answer']
-                      },
+                      if: { $eq: ['$$item.answer', '$_id.answer'] },
                       then: {
-                        $multiply: [
-                          {
-                            $divide: ['$count', '$_id.total']
-                          },
-                          100
-                        ]
+                        $multiply: [{ $divide: ['$count', '$_id.total'] }, 100]
                       },
                       else: 0
                     }
@@ -102,14 +81,8 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
         }
       })
       .group({
-        _id: {
-          surveyId: '$surveyId',
-          question: '$question',
-          date: '$date'
-        },
-        answers: {
-          $push: '$answers'
-        }
+        _id: { surveyId: '$surveyId', question: '$question', date: '$date' },
+        answers: { $push: '$answers' }
       })
       .project({
         _id: 0,
@@ -120,15 +93,11 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
           $reduce: {
             input: '$answers',
             initialValue: [],
-            in: {
-              $concatArrays: ['$$value', '$$this']
-            }
+            in: { $concatArrays: ['$$value', '$$this'] }
           }
         }
       })
-      .unwind({
-        path: '$answers'
-      })
+      .unwind({ path: '$answers' })
       .group({
         _id: {
           surveyId: '$surveyId',
@@ -137,12 +106,8 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
           answer: '$answers.answer',
           image: '$answers.image'
         },
-        count: {
-          $sum: '$answers.count'
-        },
-        percent: {
-          $sum: '$answers.percent'
-        }
+        count: { $sum: '$answers.count' },
+        percent: { $sum: '$answers.percent' }
       })
       .project({
         _id: 0,
@@ -156,18 +121,14 @@ export class MongoSurveyResultRepository implements SaveSurveyResultsRepository 
           percent: '$percent'
         }
       })
-      .sort({
-        'answer.count': -1
-      })
+      .sort({ 'answer.count': -1 })
       .group({
         _id: {
           surveyId: '$surveyId',
           question: '$question',
           date: '$date'
         },
-        answers: {
-          $push: '$answer'
-        }
+        answers: { $push: '$answer' }
       })
       .project({
         _id: 0,
