@@ -2,13 +2,13 @@ import { SurveyResultsModel } from '@domain/models/survey-results'
 import { SaveSurveyResultParams } from '@domain/usecases/save-survey-results'
 
 export const fakeSurveyResultModel: SurveyResultsModel = {
-  surveyId: 'any_survey_id',
+  surveyId: 'any_id',
   question: 'any_question',
   answers: [
-    { answer: 'any_answer', image: 'any_image', count: 100, percent: 50 },
-    { answer: 'other_answer', image: 'other_image', count: 50, percent: 75 }
+    { answer: 'any_answer', image: 'any_image', count: 0, percent: 0 },
+    { answer: 'other_answer', image: 'other_image', count: 0, percent: 0 }
   ],
-  date: new Date()
+  date: new Date('2021')
 }
 
 export const fakeSurveyResultParams: SaveSurveyResultParams = {

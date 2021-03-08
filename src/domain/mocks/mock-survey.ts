@@ -3,7 +3,7 @@ import { SurveyModel } from '../models/survey'
 
 export const fakeSurveyModel: SurveyModel = {
   id: 'any_id',
-  date: new Date(),
+  date: new Date('2021'),
   question: 'any_question',
   answers: [
     { image: 'any_image', answer: 'any_answer' },
