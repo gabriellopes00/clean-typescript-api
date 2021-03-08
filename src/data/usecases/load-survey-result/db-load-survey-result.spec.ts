@@ -25,4 +25,9 @@ describe('DbLoadSurveyResult Usecase', () => {
     const error = sut.load(fakeSurveyId)
     await expect(error).rejects.toThrow()
   })
+
+  test('Should return a surveyResult model on success', async () => {
+    const surveyResult = await sut.load(fakeSurveyId)
+    expect(surveyResult).toEqual(fakeSurveyResultModel)
+  })
 })
