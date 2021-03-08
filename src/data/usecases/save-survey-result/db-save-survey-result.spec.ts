@@ -3,11 +3,11 @@ import {
   fakeSurveyResultModel,
   fakeSurveyResultParams
 } from '../../../domain/mocks/mock-survey-result'
+import { SurveyResultsModel } from '../../../domain/models/survey-results'
 import { SaveSurveyResultParams } from '../../../domain/usecases/save-survey-results'
 import { LoadSurveyResultRepository } from '../../interfaces/db/survey/load-survey-results-repository'
 import { SaveSurveyResultsRepository } from '../../interfaces/db/survey/save-survey-result-repository'
 import { DbSaveSurveyResults } from './db-save-survey-result'
-import { SurveyResultsModel } from '../../../domain/models/survey-results'
 
 class MockSaveSurveyResultsRepository implements SaveSurveyResultsRepository {
   async save(data: SaveSurveyResultParams): Promise<void> {
@@ -31,22 +31,23 @@ describe('DbSaveSurveyResults Usecase', () => {
 
   beforeAll(() => MockDate.set(new Date()))
   afterAll(() => MockDate.reset())
+  describe('SaveSurvey repository', () => {
+    test('Should call SaveSurveyRepository with correct values ', async () => {
+      const saveSpy = jest.spyOn(mockSaveSurveyResultsRepository, 'save')
+      await sut.save(fakeSurveyResultParams)
+      expect(saveSpy).toHaveBeenCalledWith(fakeSurveyResultParams)
+    })
 
-  test('Should call SaveSurveyRepository with correct values ', async () => {
-    const saveSpy = jest.spyOn(mockSaveSurveyResultsRepository, 'save')
-    await sut.save(fakeSurveyResultParams)
-    expect(saveSpy).toHaveBeenCalledWith(fakeSurveyResultParams)
-  })
+    test('Should return a SurveyModel on success', async () => {
+      const result = await sut.save(fakeSurveyResultParams)
+      expect(result).toEqual(fakeSurveyResultModel)
+    })
 
-  test('Should return a SurveyModel on success', async () => {
-    const result = await sut.save(fakeSurveyResultParams)
-    expect(result).toEqual(fakeSurveyResultModel)
-  })
-
-  test('Should throw if SaveSurveyRepository throws', async () => {
-    mockSaveSurveyResultsRepository.save.mockRejectedValueOnce(new Error())
-    const error = sut.save(fakeSurveyResultParams)
-    await expect(error).rejects.toThrow()
+    test('Should throw if SaveSurveyRepository throws', async () => {
+      mockSaveSurveyResultsRepository.save.mockRejectedValueOnce(new Error())
+      const error = sut.save(fakeSurveyResultParams)
+      await expect(error).rejects.toThrow()
+    })
   })
 
   describe('LoadSurveyResult Repository', () => {

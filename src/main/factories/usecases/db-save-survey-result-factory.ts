@@ -4,5 +4,5 @@ import { MongoSurveyResultRepository } from '@infra/db/mongodb/survey-result/mon
 
 export const makeDbSaveSurveyResult = (): SaveSurveyResults => {
   const mongoSurveyResultRepository = new MongoSurveyResultRepository()
-  return new DbSaveSurveyResults(mongoSurveyResultRepository)
+  return new DbSaveSurveyResults(mongoSurveyResultRepository, mongoSurveyResultRepository)
 }

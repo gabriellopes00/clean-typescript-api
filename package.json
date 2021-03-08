@@ -6,7 +6,7 @@
   "author": "Gabriel Lopes <gabrielluislopes00@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --passWithNoTests --noStackTrace --runInBand --no-cache",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:watch": "yarn test --watch",
     "test:unit": "yarn test:watch -c jest-unit-config.js",

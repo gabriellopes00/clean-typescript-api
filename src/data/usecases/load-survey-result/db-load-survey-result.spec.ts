@@ -1,5 +1,8 @@
+import { fakeSurveyModel } from '../../../domain/mocks/mock-survey'
 import { fakeSurveyResultModel } from '../../../domain/mocks/mock-survey-result'
+import { SurveyModel } from '../../../domain/models/survey'
 import { SurveyResultsModel } from '../../../domain/models/survey-results'
+import { LoadSurveyByIdRepository } from '../../interfaces/db/survey/load-survey-by-id-repository'
 import { LoadSurveyResultRepository } from '../../interfaces/db/survey/load-survey-results-repository'
 import { DbLoadSurveyResults } from './db-load-survey-result'
 
@@ -9,9 +12,16 @@ class MockLoadSurveyResultsRepository implements LoadSurveyResultRepository {
   }
 }
 
+class MockLoadSurveyByIdRepository implements LoadSurveyByIdRepository {
+  async loadById(id: string): Promise<SurveyModel> {
+    return fakeSurveyModel
+  }
+}
+
 describe('DbLoadSurveyResult Usecase', () => {
   const mockLoadSurveyResultsRepository = new MockLoadSurveyResultsRepository() as jest.Mocked<MockLoadSurveyResultsRepository>
-  const sut = new DbLoadSurveyResults(mockLoadSurveyResultsRepository)
+  const mockLoadSurveyByIdRepository = new MockLoadSurveyByIdRepository() as jest.Mocked<MockLoadSurveyByIdRepository>
+  const sut = new DbLoadSurveyResults(mockLoadSurveyResultsRepository, mockLoadSurveyByIdRepository)
   const fakeSurveyId = 'any_surveyId'
 
   test('Should call LoadSurveyResultRepository', async () => {
@@ -29,5 +39,14 @@ describe('DbLoadSurveyResult Usecase', () => {
   test('Should return a surveyResult model on success', async () => {
     const surveyResult = await sut.load(fakeSurveyId)
     expect(surveyResult).toEqual(fakeSurveyResultModel)
+  })
+
+  describe('LoadSurveyById repository', () => {
+    test('Should call LoadSurveyById repository if  LoadSurveyResult repository returns null', async () => {
+      mockLoadSurveyResultsRepository.loadBySurveyId.mockResolvedValueOnce(null)
+      const loadSpy = jest.spyOn(mockLoadSurveyByIdRepository, 'loadById')
+      await sut.load(fakeSurveyId)
+      expect(loadSpy).toHaveBeenCalledWith(fakeSurveyId)
+    })
   })
 })
