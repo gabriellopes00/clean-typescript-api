@@ -3,7 +3,7 @@ import { HttpRequest } from '../../interfaces/http'
 import { LoadSurveyById } from '../../../domain/usecases/load-survey'
 import { SurveyModel } from '../../../domain/models/survey'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { forbidden } from '../../helpers/http/http'
+import { forbidden, serverError } from '../../helpers/http/http'
 
 const fakeRequest: HttpRequest = { params: { surveyId: 'any_id' } }
 
@@ -27,5 +27,11 @@ describe('LoadSurvey Controller', () => {
     mockLoadSurveyById.loadById.mockResolvedValueOnce(null)
     const response = await sut.handle(fakeRequest)
     expect(response).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    mockLoadSurveyById.loadById.mockRejectedValueOnce(new Error())
+    const response = await sut.handle(fakeRequest)
+    expect(response).toEqual(serverError(new Error()))
   })
 })
