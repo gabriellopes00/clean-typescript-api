@@ -4,18 +4,29 @@ import { LoadSurveyById } from '../../../domain/usecases/load-survey'
 import { SurveyModel } from '../../../domain/models/survey'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { forbidden, serverError } from '../../helpers/http/http'
+import { LoadSurveyResult } from '../../../domain/usecases/load-survey-results'
+import { SurveyResultsModel } from '../../../domain/models/survey-results'
+import { fakeSurveyResultModel } from '../../../domain/mocks/mock-survey-result'
+import { fakeSurveyModel } from '../../../domain/mocks/mock-survey'
 
 const fakeRequest: HttpRequest = { params: { surveyId: 'any_id' } }
 
 class MockLoadSurveyById implements LoadSurveyById {
-  loadById(id: string): Promise<SurveyModel> {
-    return null
+  async loadById(id: string): Promise<SurveyModel> {
+    return fakeSurveyModel
+  }
+}
+
+class MockLoadSurveyResult implements LoadSurveyResult {
+  async load(surveyId: string): Promise<SurveyResultsModel> {
+    return fakeSurveyResultModel
   }
 }
 
 describe('LoadSurvey Controller', () => {
   const mockLoadSurveyById = new MockLoadSurveyById() as jest.Mocked<MockLoadSurveyById>
-  const sut = new LoadSurveyResultController(mockLoadSurveyById)
+  const mockLoadSurveyResult = new MockLoadSurveyResult() as jest.Mocked<MockLoadSurveyResult>
+  const sut = new LoadSurveyResultController(mockLoadSurveyById, mockLoadSurveyResult)
 
   test('Should call LoadSurveyById with correct values', async () => {
     const loadSpy = jest.spyOn(mockLoadSurveyById, 'loadById')
@@ -33,5 +44,11 @@ describe('LoadSurvey Controller', () => {
     mockLoadSurveyById.loadById.mockRejectedValueOnce(new Error())
     const response = await sut.handle(fakeRequest)
     expect(response).toEqual(serverError(new Error()))
+  })
+
+  test('Should call LoadSurveyResult with correct values', async () => {
+    const loadSpy = jest.spyOn(mockLoadSurveyResult, 'load')
+    await sut.handle(fakeRequest)
+    expect(loadSpy).toHaveBeenCalledWith(fakeRequest.params.surveyId)
   })
 })
