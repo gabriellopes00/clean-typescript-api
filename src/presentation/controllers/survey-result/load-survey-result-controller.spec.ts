@@ -3,7 +3,7 @@ import { HttpRequest } from '../../interfaces/http'
 import { LoadSurveyById } from '../../../domain/usecases/load-survey'
 import { SurveyModel } from '../../../domain/models/survey'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { forbidden, serverError } from '../../helpers/http/http'
+import { forbidden, ok, serverError } from '../../helpers/http/http'
 import { LoadSurveyResult } from '../../../domain/usecases/load-survey-results'
 import { SurveyResultsModel } from '../../../domain/models/survey-results'
 import { fakeSurveyResultModel } from '../../../domain/mocks/mock-survey-result'
@@ -56,5 +56,10 @@ describe('LoadSurvey Controller', () => {
     mockLoadSurveyResult.load.mockRejectedValueOnce(new Error())
     const response = await sut.handle(fakeRequest)
     expect(response).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 on success', async () => {
+    const response = await sut.handle(fakeRequest)
+    expect(response).toEqual(ok(fakeSurveyResultModel))
   })
 })
