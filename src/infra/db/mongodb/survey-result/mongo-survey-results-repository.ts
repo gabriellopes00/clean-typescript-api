@@ -8,18 +8,16 @@ import { QueryBuilder } from '../helpers/query-bulder'
 
 export class MongoSurveyResultRepository
 implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
-  async save(data: SaveSurveyResultParams): Promise<SurveyResultsModel> {
+  async save(data: SaveSurveyResultParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate(
       { surveyId: new ObjectId(data.surveyId), accountId: new ObjectId(data.accountId) },
       { $set: { answer: data.answer, date: data.date } },
       { upsert: true }
     )
-    const surveyResult = await this.loadBySurveyId(data.surveyId)
-    return surveyResult
   }
 
-  public async loadBySurveyId(surveyId: string): Promise<SurveyResultsModel> {
+  async loadBySurveyId(surveyId: string): Promise<SurveyResultsModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
