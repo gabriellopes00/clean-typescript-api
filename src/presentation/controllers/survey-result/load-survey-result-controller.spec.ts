@@ -8,6 +8,7 @@ import { LoadSurveyResult } from '../../../domain/usecases/load-survey-results'
 import { SurveyResultsModel } from '../../../domain/models/survey-results'
 import { fakeSurveyResultModel } from '../../../domain/mocks/mock-survey-result'
 import { fakeSurveyModel } from '../../../domain/mocks/mock-survey'
+import mockDate from 'mockdate'
 
 const fakeRequest: HttpRequest = { params: { surveyId: 'any_id' } }
 
@@ -27,6 +28,9 @@ describe('LoadSurvey Controller', () => {
   const mockLoadSurveyById = new MockLoadSurveyById() as jest.Mocked<MockLoadSurveyById>
   const mockLoadSurveyResult = new MockLoadSurveyResult() as jest.Mocked<MockLoadSurveyResult>
   const sut = new LoadSurveyResultController(mockLoadSurveyById, mockLoadSurveyResult)
+
+  beforeAll(() => mockDate.set(new Date()))
+  afterAll(() => mockDate.reset())
 
   test('Should call LoadSurveyById with correct values', async () => {
     const loadSpy = jest.spyOn(mockLoadSurveyById, 'loadById')
