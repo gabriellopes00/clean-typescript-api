@@ -49,5 +49,19 @@ describe('Survey Routes', () => {
     test('Should return 403 on GET, without accessToken', async () => {
       await request(app).get('/api/surveys/any_id/results').expect(403)
     })
+
+    test('Should return 200 on load survey result with accessToken', async () => {
+      const res = await surveyCollection.insertOne({ ...fakeSurveyParams, date: new Date() })
+
+      const account = await accountCollection.insertOne(fakeAccountParams)
+      const id = account.ops[0]._id
+      const accessToken = sign({ id }, env.jwtSecret)
+      await accountCollection.updateOne({ _id: id }, { $set: { accessToken } })
+
+      await request(app)
+        .get(`/api/surveys/${res.ops[0]._id}/results`)
+        .set('access-token', accessToken)
+        .expect(200)
+    })
   })
 })
