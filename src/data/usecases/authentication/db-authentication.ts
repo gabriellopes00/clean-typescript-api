@@ -1,3 +1,4 @@
+import { AuthenticationModel } from '@domain/models/account'
 import { AuthenticationParams, Authenticator } from '@domain/usecases/authentication'
 import { Encrypter } from '../../interfaces/cryptography/encrypter'
 import { HashComparer } from '../../interfaces/cryptography/hash-comparer'
@@ -12,14 +13,14 @@ export class DbAuthentication implements Authenticator {
     private readonly accessTokenRepository: AccessTokenRepository
   ) {}
 
-  async authenticate(data: AuthenticationParams): Promise<string> {
+  async authenticate(data: AuthenticationParams): Promise<AuthenticationModel> {
     const account = await this.loadAccountRepository.loadByEmail(data.email)
     if (account) {
       const isValid = await this.hashComparer.compare(data.password, account.password)
       if (isValid) {
         const accessToken = await this.encrypter.encrypt(account.id)
         await this.accessTokenRepository.storeAccessToken(account.id, accessToken)
-        return accessToken
+        return { accessToken, name: account.name }
       }
     }
     return null

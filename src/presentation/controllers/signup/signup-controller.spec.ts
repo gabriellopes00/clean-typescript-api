@@ -1,5 +1,5 @@
 import { fakeAccountModel, fakeAccountParams } from '../../../domain/mocks/mock-account'
-import { AccountModel } from '../../../domain/models/account'
+import { AccountModel, AuthenticationModel } from '../../../domain/models/account'
 import { AddAccount, AddAccountParams } from '../../../domain/usecases/add-account'
 import { AuthenticationParams, Authenticator } from '../../../domain/usecases/authentication'
 import {
@@ -25,8 +25,8 @@ class MockValidation implements Validation {
 }
 
 class MockAuthenticator implements Authenticator {
-  async authenticate(data: AuthenticationParams): Promise<string> {
-    return new Promise(resolve => resolve('access_token'))
+  async authenticate(data: AuthenticationParams): Promise<AuthenticationModel> {
+    return new Promise(resolve => resolve({ accessToken: 'access_token', name: 'any_name' }))
   }
 }
 
@@ -53,7 +53,7 @@ describe('SingUp Controller', () => {
 
     test('Should return 200 if valid data is provided', async () => {
       const httpResponse = await sut.handle(fakeRequest)
-      expect(httpResponse).toEqual(ok({ accessToken: 'access_token' }))
+      expect(httpResponse).toEqual(ok({ accessToken: 'access_token', name: 'any_name' }))
     })
 
     test('Should return 403 if addAccount returns null', async () => {

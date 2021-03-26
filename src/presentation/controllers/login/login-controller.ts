@@ -13,10 +13,10 @@ export class LoginController implements Controller {
       const error = this.validation.validate(httpRequest.body)
       if (error) return badRequest(error)
 
-      const accessToken = await this.authenticator.authenticate(httpRequest.body)
-      if (!accessToken) return unauthorized()
+      const authModel = await this.authenticator.authenticate(httpRequest.body)
+      if (!authModel) return unauthorized()
 
-      return ok({ accessToken })
+      return ok(authModel)
     } catch (error) {
       return serverError(error)
     }

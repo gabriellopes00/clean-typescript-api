@@ -4,3 +4,8 @@ export interface AccountModel {
   email: string
   password: string
 }
+
+export interface AuthenticationModel {
+  accessToken: string
+  name: string
+}

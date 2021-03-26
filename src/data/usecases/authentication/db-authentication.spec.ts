@@ -58,8 +58,8 @@ describe('DbAuthentication Usecase', () => {
 
     test('Should return null if LoadAccountRepository returns null', async () => {
       mockLoadAccountRepository.loadByEmail.mockReturnValueOnce(null)
-      const accessToken = await sut.authenticate(fakeAuthParams)
-      expect(accessToken).toBeNull()
+      const model = await sut.authenticate(fakeAuthParams)
+      expect(model).toBeNull()
     })
   })
 
@@ -78,8 +78,8 @@ describe('DbAuthentication Usecase', () => {
 
     test('Should return null if HashComparer returns false', async () => {
       mockHashComparer.compare.mockResolvedValueOnce(false)
-      const accessToken = await sut.authenticate(fakeAuthParams)
-      expect(accessToken).toBeNull()
+      const model = await sut.authenticate(fakeAuthParams)
+      expect(model).toBeNull()
     })
   })
 
@@ -96,9 +96,10 @@ describe('DbAuthentication Usecase', () => {
       await expect(promiseError).rejects.toThrow()
     })
 
-    test('Should return a token on success', async () => {
-      const accessToken = await sut.authenticate(fakeAuthParams)
+    test('Should return an authentication model on success', async () => {
+      const { accessToken, name } = await sut.authenticate(fakeAuthParams)
       expect(accessToken).toBe('any_token')
+      expect(name).toBe(fakeAccountModel.name)
     })
     test('Should throw if Encrypter throws', async () => {
       mockEncrypter.encrypt.mockRejectedValueOnce(new Error())
