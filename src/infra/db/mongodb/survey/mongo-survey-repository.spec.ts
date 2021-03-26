@@ -1,9 +1,21 @@
 import { Collection } from 'mongodb'
 import { fakeSurveyParams, fakeSurveysModel } from '../../../../domain/mocks/mock-survey'
+import { AccountModel } from '../../../../domain/models/account'
 import { MongoHelper } from '../helpers/mongo'
 import { MongoSurveyRepository } from './mongo-survey-repository'
 
 let surveyCollection: Collection
+let surveyResultCollection: Collection
+let accountCollection: Collection
+
+const makeAccount = async (): Promise<AccountModel> => {
+  const res = await accountCollection.insertOne({
+    name: 'any_name',
+    email: 'any_email@mail.com',
+    password: 'any_password'
+  })
+  return MongoHelper.map(res.ops[0])
+}
 
 describe('Survey Mongodb Repository', () => {
   const sut = new MongoSurveyRepository()
@@ -12,7 +24,11 @@ describe('Survey Mongodb Repository', () => {
   afterAll(async () => await MongoHelper.disconnect())
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
+    accountCollection = await MongoHelper.getCollection('account')
+    surveyResultCollection = await MongoHelper.getCollection('surveyResult')
     await surveyCollection.deleteMany({})
+    await surveyResultCollection.deleteMany({})
+    await accountCollection.deleteMany({})
   })
 
   describe('AddSurvey', () => {
@@ -25,15 +41,26 @@ describe('Survey Mongodb Repository', () => {
 
   describe('LoadAllSurveys', () => {
     test('Should load all surveys on success', async () => {
-      await surveyCollection.insertMany(fakeSurveysModel)
-      const surveys = await sut.loadAll()
+      const account = await makeAccount()
+      const result = await surveyCollection.insertMany(fakeSurveysModel)
+      const survey = result.ops[0]
+      await surveyResultCollection.insertOne({
+        accountId: account.id,
+        date: new Date(),
+        surveyId: survey._id,
+        answer: survey.answers[0].answer
+      })
+      const surveys = await sut.loadAll(account.id)
       expect(surveys.length).toBe(2)
       expect(surveys[0].id).toBeTruthy()
+      expect(surveys[0].didAnswer).toBeTruthy()
       expect(surveys[1].id).toBeTruthy()
+      expect(surveys[1].didAnswer).toBeFalsy()
     })
 
     test('Should load an empty list if there are not surveys registered', async () => {
-      const surveys = await sut.loadAll()
+      const account = await makeAccount()
+      const surveys = await sut.loadAll(account.id)
       expect(surveys.length).toBe(0)
       expect(surveys).toBeInstanceOf(Array)
     })

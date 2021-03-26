@@ -4,6 +4,7 @@ export const surveySchema = {
     id: { type: 'string' },
     question: { type: 'string' },
     date: { type: 'string' },
-    answer: { type: 'array', items: { $ref: '#/schemas/surveyAnswer' } }
+    answer: { type: 'array', items: { $ref: '#/schemas/surveyAnswer' } },
+    didAnswer: { type: 'boolean' }
   }
 }

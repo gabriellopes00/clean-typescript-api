@@ -12,21 +12,22 @@ class MockAdSurveyRepository implements LoadSurveyRepository {
 describe('DbLoadSurvey', () => {
   const mockAdSurveyRepository = new MockAdSurveyRepository() as jest.Mocked<MockAdSurveyRepository>
   const sut = new DbLoadSurvey(mockAdSurveyRepository)
+  const fakeId = 'any_id'
 
   test('Should call LoadSurveyRepository', async () => {
     const loadSpy = jest.spyOn(mockAdSurveyRepository, 'loadAll')
-    await sut.load()
-    expect(loadSpy).toHaveBeenCalled()
+    await sut.load(fakeId)
+    expect(loadSpy).toHaveBeenCalledWith(fakeId)
   })
 
   test('Should return a list of surveys on success', async () => {
-    const surveys = await sut.load()
+    const surveys = await sut.load(fakeId)
     expect(surveys).toEqual(fakeSurveysModel)
   })
 
   test('Should throw LoadSurveyRepository throws', async () => {
     mockAdSurveyRepository.loadAll.mockRejectedValueOnce(new Error())
-    const error = sut.load()
+    const error = sut.load(fakeId)
     await expect(error).rejects.toThrow()
   })
 })
