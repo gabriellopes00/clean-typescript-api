@@ -36,8 +36,8 @@ describe('DbLoadAccountByToken', () => {
 
     test('Should throw if Decrypter throws', async () => {
       mockDecrypter.decript.mockRejectedValueOnce(new Error())
-      const promise = sut.load('any_token', 'any_role')
-      await expect(promise).rejects.toThrow()
+      const account = await sut.load('any_token', 'any_role')
+      expect(account).toBeNull()
     })
   })
 
