@@ -17,7 +17,7 @@ implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
     )
   }
 
-  async loadBySurveyId(surveyId: string): Promise<SurveyResultsModel> {
+  async loadBySurveyId(surveyId: string, accountId: string): Promise<SurveyResultsModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
@@ -41,7 +41,10 @@ implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
           answer: '$data.answer',
           answers: '$survey.answers'
         },
-        count: { $sum: 1 }
+        count: { $sum: 1 },
+        currentAccountResponse: {
+          $push: { $cond: [{ $eq: ['$data.accountId', accountId] }, '$data.answer', null] }
+        }
       })
       .project({
         _id: 0,
@@ -71,6 +74,9 @@ implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
                       },
                       else: 0
                     }
+                  },
+                  isCurrentAccountResponse: {
+                    $eq: ['$$item.answer', { $arrayElemAt: ['$currentAccountResponse', 0] }]
                   }
                 }
               ]
@@ -102,7 +108,8 @@ implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
           question: '$question',
           date: '$date',
           answer: '$answers.answer',
-          image: '$answers.image'
+          image: '$answers.image',
+          isCurrentAccountResponse: '$answers.isCurrentAccountAnswer'
         },
         count: { $sum: '$answers.count' },
         percent: { $sum: '$answers.percent' }
@@ -115,8 +122,9 @@ implements SaveSurveyResultsRepository, LoadSurveyResultRepository {
         answer: {
           answer: '$_id.answer',
           image: '$_id.image',
-          count: '$count',
-          percent: '$percent'
+          count: { $round: ['$count'] },
+          percent: '$percent',
+          isCurrentAccountResponse: '$_id.isCurrentAccountAnswer'
         }
       })
       .sort({ 'answer.count': -1 })

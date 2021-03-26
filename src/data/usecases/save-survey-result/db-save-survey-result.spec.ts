@@ -16,7 +16,7 @@ class MockSaveSurveyResultsRepository implements SaveSurveyResultsRepository {
 }
 
 class MockLoadSurveyResultsRepository implements LoadSurveyResultRepository {
-  async loadBySurveyId(surveyId: string): Promise<SurveyResultsModel> {
+  async loadBySurveyId(surveyId: string, accountId: string): Promise<SurveyResultsModel> {
     return fakeSurveyResultModel
   }
 }
@@ -54,7 +54,10 @@ describe('DbSaveSurveyResults Usecase', () => {
     test('Should call LoadSurveyRepository with correct values ', async () => {
       const loadSpy = jest.spyOn(mockLoadSurveyResultsRepository, 'loadBySurveyId')
       await sut.save(fakeSurveyResultParams)
-      expect(loadSpy).toHaveBeenCalledWith(fakeSurveyResultParams.surveyId)
+      expect(loadSpy).toHaveBeenCalledWith(
+        fakeSurveyResultParams.surveyId,
+        fakeSurveyResultParams.accountId
+      )
     })
 
     test('Should throw if LoadSurveyRepository throws', async () => {

@@ -3,6 +3,7 @@ export interface SurveyResultAnswerModel {
   answer: string
   count: number
   percent: number
+  isCurrentAccountResponse: boolean
 }
 
 export interface SurveyResultsModel {

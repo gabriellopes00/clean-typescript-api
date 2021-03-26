@@ -124,7 +124,7 @@ describe('Survey Mongo Repository', () => {
         }
       ])
 
-      const surveyResults = await sut.loadBySurveyId(survey._id)
+      const surveyResults = await sut.loadBySurveyId(survey._id, account._id)
       expect(surveyResults).toBeTruthy()
       expect(surveyResults.surveyId).toEqual(survey._id)
       expect(surveyResults.answers[0].count).toBe(1)
@@ -136,8 +136,10 @@ describe('Survey Mongo Repository', () => {
 
   test('Should return null if there is no surveys results', async () => {
     const insertedSurvey = await surveyCollection.insertOne(fakeSurveyModel)
+    const insertedAccount = await surveyCollection.insertOne(fakeAccountModel)
+    const account = insertedAccount.ops[0]
     const survey = insertedSurvey.ops[0]
-    const surveyResults = await sut.loadBySurveyId(survey._id)
+    const surveyResults = await sut.loadBySurveyId(survey._id, account._id)
     expect(surveyResults).toBeNull()
   })
 })

@@ -10,7 +10,7 @@ import { fakeSurveyResultModel } from '../../../domain/mocks/mock-survey-result'
 import { fakeSurveyModel } from '../../../domain/mocks/mock-survey'
 import mockDate from 'mockdate'
 
-const fakeRequest: HttpRequest = { params: { surveyId: 'any_id' } }
+const fakeRequest: HttpRequest = { accountId: 'any_id', params: { surveyId: 'any_id' } }
 
 class MockLoadSurveyById implements LoadSurveyById {
   async loadById(id: string): Promise<SurveyModel> {
@@ -19,7 +19,7 @@ class MockLoadSurveyById implements LoadSurveyById {
 }
 
 class MockLoadSurveyResult implements LoadSurveyResult {
-  async load(surveyId: string): Promise<SurveyResultsModel> {
+  async load(surveyId: string, accountId: string): Promise<SurveyResultsModel> {
     return fakeSurveyResultModel
   }
 }
@@ -53,7 +53,7 @@ describe('LoadSurvey Controller', () => {
   test('Should call LoadSurveyResult with correct values', async () => {
     const loadSpy = jest.spyOn(mockLoadSurveyResult, 'load')
     await sut.handle(fakeRequest)
-    expect(loadSpy).toHaveBeenCalledWith(fakeRequest.params.surveyId)
+    expect(loadSpy).toHaveBeenCalledWith(fakeRequest.params.surveyId, fakeRequest.accountId)
   })
 
   test('Should return 500 if LoadSurveyResult throws', async () => {
