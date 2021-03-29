@@ -3,7 +3,6 @@ import { AuthenticationModel } from '../../../domain/models/account'
 import { AuthenticationParams, Authenticator } from '../../../domain/usecases/authentication'
 import { MissingParamError } from '../../errors'
 import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/http'
-import { HttpRequest } from '../../interfaces/http'
 import { Validation } from '../../interfaces/validation'
 import { LoginController } from './login-controller'
 
@@ -19,7 +18,7 @@ class MockAuthenticator implements Authenticator {
   }
 }
 
-export const fakeRequest: HttpRequest = { body: { ...fakeLoginParams } }
+export const fakeRequest: LoginController.Request = { ...fakeLoginParams }
 
 describe('Login Controller', () => {
   const mockValidation = new MockValidation() as jest.Mocked<MockValidation>
@@ -56,7 +55,7 @@ describe('Login Controller', () => {
       const validateSpy = jest.spyOn(mockValidation, 'validate')
       const httpRequest = fakeRequest
       await sut.handle(httpRequest)
-      expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+      expect(validateSpy).toHaveBeenCalledWith(httpRequest)
     })
 
     test('Should return 400 if Validation returns an Error', async () => {

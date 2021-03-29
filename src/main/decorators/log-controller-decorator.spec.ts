@@ -1,10 +1,10 @@
 import { LogErrorRepository } from '../../data/interfaces/db/log/log-error-repository'
 import { fakeAccountModel, fakeAccountParams } from '../../domain/mocks/mock-account'
 import { ok, serverError } from '../../presentation/helpers/http/http'
-import { Controller, HttpRequest, HttpResponse } from '../../presentation/interfaces'
+import { Controller, HttpResponse } from '../../presentation/interfaces'
 import { LogControllerDecorator } from './log-controller-decorator'
 
-const fakeRequest: HttpRequest = { body: fakeAccountParams }
+const fakeRequest = fakeAccountParams
 
 const fakeError = new Error()
 fakeError.stack = 'error_stack'
@@ -17,7 +17,7 @@ class MockLogErrorRepository implements LogErrorRepository {
 }
 
 class MockController implements Controller {
-  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle(httpRequest): Promise<HttpResponse> {
     return new Promise(resolve => resolve(ok(fakeAccountModel)))
   }
 }

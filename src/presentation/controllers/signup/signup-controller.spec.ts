@@ -8,7 +8,6 @@ import {
   ServerError
 } from '../../../presentation/errors/index'
 import { badRequest, forbidden, ok, serverError } from '../../helpers/http/http'
-import { HttpRequest } from '../../interfaces/http'
 import { Validation } from '../../interfaces/validation'
 import { SignUpController } from './signup-controller'
 
@@ -30,7 +29,12 @@ class MockAuthenticator implements Authenticator {
   }
 }
 
-export const fakeRequest: HttpRequest<AddAccountParams> = { body: { ...fakeAccountParams } }
+export const fakeRequest: SignUpController.Request = {
+  name: fakeAccountParams.name,
+  email: fakeAccountParams.email,
+  password: fakeAccountParams.password,
+  passwordConfirmation: 'any_password'
+}
 
 describe('SingUp Controller', () => {
   const mockValidation = new MockValidation() as jest.Mocked<MockValidation>
@@ -68,7 +72,7 @@ describe('SingUp Controller', () => {
       const validateSpy = jest.spyOn(mockValidation, 'validate')
       const httpRequest = fakeRequest
       await sut.handle(httpRequest)
-      expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+      expect(validateSpy).toHaveBeenCalledWith(httpRequest)
     })
 
     test('Should return 400 if Validation returns an Error', async () => {

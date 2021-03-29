@@ -3,12 +3,9 @@ import { AccountModel } from '../../domain/models/account'
 import { LoadAccountByToken } from '../../domain/usecases/load-account-by-token'
 import { AccessDeniedError } from '../errors/access-denied'
 import { forbidden, ok, serverError } from '../helpers/http/http'
-import { HttpRequest } from '../interfaces/http'
 import { AuthMiddleware } from './auth-middleware'
 
-const fakeRequest: HttpRequest<any, { accessToken: string }> = {
-  headers: { accessToken: 'any_token' }
-}
+const fakeRequest: AuthMiddleware.Request = { accessToken: 'any_token' }
 
 class MockLoadAccountByToken implements LoadAccountByToken {
   load(accessToken: string): Promise<AccountModel> {
@@ -29,7 +26,7 @@ describe('Auth Middleware', () => {
   test('Should call LoadAccountByToken with correct accessToken', async () => {
     const loadSpy = jest.spyOn(mockLoadAccountByToken, 'load')
     await sut.handle(fakeRequest)
-    expect(loadSpy).toHaveBeenCalledWith(fakeRequest.headers.accessToken, role)
+    expect(loadSpy).toHaveBeenCalledWith(fakeRequest.accessToken, role)
   })
 
   test('Should return 403 if LoadAccountByToken returns null', async () => {

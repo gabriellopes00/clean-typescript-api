@@ -14,7 +14,7 @@ class MockLoadSurvey implements LoadSurvey {
 describe('LoadSurvey Controller', () => {
   const mockLoadSurvey = new MockLoadSurvey() as jest.Mocked<MockLoadSurvey>
   const sut = new LoadSurveyController(mockLoadSurvey)
-  const fakeRequest = { accountId: 'anu_id' }
+  const fakeRequest = { accountId: 'any_id' }
 
   beforeAll(() => MockDate.set(new Date()))
   afterAll(() => MockDate.reset)

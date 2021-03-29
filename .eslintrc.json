@@ -22,6 +22,8 @@
         "asyncArrow": "always"
       }
     ],
-    "no-useless-constructor": "off"
+    "no-useless-constructor": "off",
+    "import/export": "off",
+    "no-redeclare": "off"
   }
 }

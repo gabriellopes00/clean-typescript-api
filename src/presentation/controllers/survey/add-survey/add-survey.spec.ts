@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import { fakeSurveyParams } from '../../../../domain/mocks/mock-survey'
 import { AddSurvey, AddSurveyParams } from '../../../../domain/usecases/add-survey'
 import { badRequest, noContent, serverError } from '../../../helpers/http/http'
-import { HttpRequest, Validation } from '../../../interfaces'
+import { Validation } from '../../../interfaces'
 import { AddSurveyController } from './add-survey'
 
 class MockValidation implements Validation {
@@ -25,13 +25,16 @@ describe('AddSurvey Controller', () => {
   beforeAll(() => MockDate.set(new Date()))
   afterAll(() => MockDate.reset)
 
-  const fakeRequest: HttpRequest = { body: { ...fakeSurveyParams } }
+  const fakeRequest: AddSurveyController.Request = {
+    question: fakeSurveyParams.question,
+    answers: fakeSurveyParams.answers
+  }
 
   describe('Validation', () => {
     test('Should call Validation with correct values', async () => {
       const validateSpy = jest.spyOn(mockValidation, 'validate')
       await sut.handle(fakeRequest)
-      expect(validateSpy).toHaveBeenCalledWith(fakeRequest.body)
+      expect(validateSpy).toHaveBeenCalledWith(fakeRequest)
     })
 
     test('Should return 400 if Validation fails', async () => {
@@ -45,7 +48,7 @@ describe('AddSurvey Controller', () => {
     test('Should call AddSurvey with correct values', async () => {
       const addSpy = jest.spyOn(mockAddSurvey, 'add')
       await sut.handle(fakeRequest)
-      expect(addSpy).toHaveBeenCalledWith({ ...fakeRequest.body, date: new Date() })
+      expect(addSpy).toHaveBeenCalledWith({ ...fakeRequest, date: new Date() })
     })
 
     test('Should return 500 if AddSurvey throws', async () => {

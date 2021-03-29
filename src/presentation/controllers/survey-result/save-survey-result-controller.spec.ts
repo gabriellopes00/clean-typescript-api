@@ -10,7 +10,6 @@ import {
 } from '../../../domain/usecases/save-survey-results'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { forbidden, ok, serverError } from '../../helpers/http/http'
-import { HttpRequest } from '../../interfaces'
 import { SaveSurveyResultController } from './save-survey-result-controller'
 
 class MockLoadSurveyById implements LoadSurveyById {
@@ -30,9 +29,9 @@ describe('Save survey result controller', () => {
   const mockSaveSurveyResult = new MockSaveSurveyResult() as jest.Mocked<MockSaveSurveyResult>
   const sut = new SaveSurveyResultController(mockLoadSurveyById, mockSaveSurveyResult)
 
-  const fakeRequest: HttpRequest = {
-    params: { surveyId: 'any_id' },
-    body: { answer: 'any_answer' },
+  const fakeRequest: SaveSurveyResultController.Request = {
+    surveyId: 'any_id',
+    answer: 'any_answer',
     accountId: 'any_account_id'
   }
 
@@ -73,8 +72,9 @@ describe('Save survey result controller', () => {
 
     test('Should return 403 if an invalid response is provided', async () => {
       const response = await sut.handle({
-        params: { surveyId: 'any_id' },
-        body: { answer: 'wrong_answer' }
+        surveyId: 'any_id',
+        answer: 'wrong_answer',
+        accountId: 'any_account_id'
       })
       expect(response).toEqual(forbidden(new InvalidParamError('answer')))
     })

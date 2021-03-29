@@ -1,6 +1,6 @@
 import { badRequest, serverError, unauthorized, ok } from '../../helpers/http/http'
-import { AuthenticationParams, Authenticator } from '@domain/usecases/authentication'
-import { Controller, HttpRequest, HttpResponse, Validation } from '../../interfaces'
+import { Authenticator } from '@domain/usecases/authentication'
+import { Controller, HttpResponse, Validation } from '../../interfaces'
 
 export class LoginController implements Controller {
   constructor(
@@ -8,17 +8,24 @@ export class LoginController implements Controller {
     private readonly authenticator: Authenticator
   ) {}
 
-  async handle(httpRequest: HttpRequest<AuthenticationParams>): Promise<HttpResponse> {
+  async handle(request: LoginController.Request): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(request)
       if (error) return badRequest(error)
 
-      const authModel = await this.authenticator.authenticate(httpRequest.body)
+      const authModel = await this.authenticator.authenticate(request)
       if (!authModel) return unauthorized()
 
       return ok(authModel)
     } catch (error) {
       return serverError(error)
     }
+  }
+}
+
+export namespace LoginController {
+  export interface Request {
+    email: string
+    password: string
   }
 }
