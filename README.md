@@ -3,7 +3,7 @@
   <img src="https://cdn.svgporn.com/logos/typescript-icon.svg" alt="typescript" width="30" height="30"/>
 </h1>
 
-![version badge](https://img.shields.io/badge/version-1.5.0-blue.svg)
+![version badge](https://img.shields.io/badge/version-1.7.1-blue.svg)
 [![Build Status](https://travis-ci.org/gabriellopes00/clean-typescript-api.svg?branch=main)](https://travis-ci.org/gabriellopes00/clean-typescript-api)
 [![Coverage Status](https://coveralls.io/repos/github/gabriellopes00/clean-typescript-api/badge.svg)](https://coveralls.io/github/gabriellopes00/clean-typescript-api)
 ![stars badge](https://img.shields.io/github/stars/gabriellopes00/clean-typescript-api.svg)
