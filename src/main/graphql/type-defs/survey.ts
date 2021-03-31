@@ -15,6 +15,6 @@ export default gql`
   }
 
   extend type Query {
-    surveys: [Survey!]!
+    surveys: [Survey!]! @auth
   }
 `
