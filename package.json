@@ -1,6 +1,6 @@
 {
   "name": "clean-typescript-api",
-  "version": "1.7.1",
+  "version": "2.0.0",
   "description": "A typescript api made with clean architecture and TDD",
   "main": "src/main/server.ts",
   "author": "Gabriel Lopes <gabrielluislopes00@gmail.com>",
