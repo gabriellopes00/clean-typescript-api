@@ -9,4 +9,13 @@ export default gql`
   extend type Query {
     login(email: String!, password: String!): Account!
   }
+
+  extend type Mutation {
+    signup(
+      email: String!
+      name: String!
+      password: String!
+      passwordConfirmation: String!
+    ): Account!
+  }
 `
